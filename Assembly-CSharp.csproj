@@ -63,11 +63,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\IA_Car.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\FinishLineTrigger.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\IA_Car.cs" />
     <Compile Include="Assets\Scripts\PathReader.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\TrackController.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Programes/Unity/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

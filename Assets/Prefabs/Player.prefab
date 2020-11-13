@@ -828,5 +828,5 @@ MonoBehaviour:
   rb: {fileID: 889018942978703895}
   motorForce: 1000
   breakForce: 3000
-  maxSteerAngle: 30
+  maxSteerAngle: 10
   rpm: 0
