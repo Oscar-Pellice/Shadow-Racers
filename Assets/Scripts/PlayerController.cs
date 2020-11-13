@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Controladors de les rodes
     [SerializeField] private WheelCollider frontLeftWheelCollider = null;
     [SerializeField] private WheelCollider frontRightWheelCollider = null;
     [SerializeField] private WheelCollider rearLeftWheelCollider = null;
@@ -15,22 +16,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform = null;
     [SerializeField] private Transform rearRightWheelTransform = null;
 
+    // Cos del cotxe
     [SerializeField] private Rigidbody rb = null;
 
+    // Factors de control del cotxe
     [SerializeField] private float motorForce = 0;
     [SerializeField] private float breakForce = 0;
     [SerializeField] private float maxSteerAngle = 0;
-
-    private float horizontalInput;
-    private float verticalInput;
     private float currentSteerAngle;
     private float currentbreakForce;
     private bool isBreaking;
     public float rpm = 0;
 
+    // Inputs
+    private float horizontalInput;
+    private float verticalInput;
+    
     // Start is called before the first frame update
     void Start()
     {
+        // Resituem el centre de massa
         rb.centerOfMass = new Vector3 (0,-0.25f,0); // Movem el centre de massa per que no giri
     }
 
@@ -40,6 +45,7 @@ public class PlayerController : MonoBehaviour
         GetInput();
     }
 
+    // Detectem inputs del teclat
     private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
@@ -54,6 +60,7 @@ public class PlayerController : MonoBehaviour
         UpdateWheels();
     }
 
+    // Apliquem força de motor
     private void HandleMotor()
     {
         rearLeftWheelCollider.motorTorque = verticalInput * motorForce;
@@ -65,6 +72,7 @@ public class PlayerController : MonoBehaviour
         rpm = frontLeftWheelCollider.rpm;
     }
 
+    // Apliquem frenat
     private void ApplyBreaking()
     {
         frontRightWheelCollider.brakeTorque = currentbreakForce;
@@ -73,6 +81,7 @@ public class PlayerController : MonoBehaviour
         rearRightWheelCollider.brakeTorque = currentbreakForce;
     }
 
+    // Rota les rodes
     private void HandleSteering()
     {
         currentSteerAngle = maxSteerAngle * horizontalInput;
@@ -80,6 +89,7 @@ public class PlayerController : MonoBehaviour
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
 
+    // Situa els meshes on els transforms
     private void UpdateWheels()
     {
         UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
