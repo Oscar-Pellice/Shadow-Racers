@@ -100,9 +100,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
     {
-        Vector3 pos;
-        Quaternion rot;
-        wheelCollider.GetWorldPose(out pos, out rot);
+        wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }

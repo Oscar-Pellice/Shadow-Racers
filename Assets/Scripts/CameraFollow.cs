@@ -41,7 +41,7 @@ public class CameraFollow : MonoBehaviour
     }
 
     // Serveix per designar el transform a mirar
-    public void setTarget (Transform player)
+    public void SetTarget (Transform player)
     {
         target = player;
     }
