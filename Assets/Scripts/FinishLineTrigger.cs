@@ -12,6 +12,6 @@ public class FinishLineTrigger : MonoBehaviour
             gameManager = FindObjectOfType<GameManager>();
         }
 
-        gameManager.finishRound();
+        gameManager.FinishRound();
     }
 }

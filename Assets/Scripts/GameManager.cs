@@ -1,7 +1,5 @@
-﻿using JetBrains.Annotations;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,18 +14,24 @@ public class GameManager : MonoBehaviour
     public struct PathInfo
     {
         private float velocity;
+        private float time;
         private Vector3 position;
 
-        public PathInfo(float rpm, Vector3 playerPosition) {
+        public PathInfo(float rpm, Vector3 playerPosition, float temps) {
             velocity = rpm;
             position = playerPosition;
+            time = temps;
         }
 
-        public float getVelocity() {
+        public float GetVelocity() {
             return velocity;
         }
-        public Vector3 getPosition() {
+        public Vector3 GetPosition() {
             return position;
+        }
+        public float GetTime()
+        {
+            return time;
         }
     }
 
@@ -44,16 +48,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        createPlayer();
+        CreatePlayer();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void finishRound()
+    public void FinishRound()
     {
         foreach (GameObject obj in cars) Destroy(obj);
         foreach (GameObject obj in playerList) Destroy(obj);
@@ -69,14 +67,14 @@ public class GameManager : MonoBehaviour
         {
             GameObject phantom = Instantiate(phantomPlayerPrefab, startingPosition, Quaternion.identity);
             cars.Add(phantom);
-            phantom.GetComponent<IA_Car>().create(i);
+            phantom.GetComponent<IA_Car>().Create(i);
             yield return new WaitForSecondsRealtime(3);
         }
-        createPlayer();
+        CreatePlayer();
     }
 
     // Serveix per crear i inicialitzar el jugador
-    void createPlayer()
+    void CreatePlayer()
     {
         //Creem i guardem el jugador
         GameObject player = Instantiate(playerPrefab, startingPosition, Quaternion.identity);
@@ -86,11 +84,11 @@ public class GameManager : MonoBehaviour
         GameObject pathReaderObject = Instantiate(pathRegisterPrefab);
         pathReaders.Add(pathReaderObject);
         pathRegister.Add(new List<PathInfo>());
-        pathReaderObject.GetComponent<PathReader>().create(playerRegisterCounter, player);
+        pathReaderObject.GetComponent<PathReader>().Create(playerRegisterCounter, player);
         playerRegisterCounter++;
 
         //Creem i setejem la camera
         GameObject camera = GameObject.Find("Main Camera");
-        camera.GetComponent<CameraFollow>().setTarget(player.transform.GetChild(0));
+        camera.GetComponent<CameraFollow>().SetTarget(player.transform.GetChild(0));
     }
 }

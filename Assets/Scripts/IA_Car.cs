@@ -27,15 +27,16 @@ public class IA_Car : MonoBehaviour
     int nextNode = 0;
     private GameManager.PathInfo[] info;
     private Vector3 targetToGet;
-    private const int MaxNodesSkip = 5;
-    private const int MinDistToPoint = 3;
+    private float timeStart;
+    //private const int MaxNodesSkip = 5;
+    //private const int MinDistToPoint = 3;
 
     // Info de GameManager
     GameManager gameManager;
     int readerId;
 
     // Crida al fer instance
-    public void create(int id)
+    public void Create(int id)
     {
         readerId = id;
     }
@@ -52,6 +53,8 @@ public class IA_Car : MonoBehaviour
 
         //Troba el transform del cotxe
         IAcar_transform = transform.GetChild(0);
+
+        timeStart = Time.time;
     }
 
     // Update is called once per frame
@@ -59,12 +62,12 @@ public class IA_Car : MonoBehaviour
     {
         // Busquem la millor posició al seguent node
         //targetToGet = getBetterPosition(nextNode);
-        targetToGet = info[nextNode].getPosition();
-        if (Vector3.Distance(targetToGet, IAcar_transform.position) < MinDistToPoint )  nextNode++;
+        targetToGet = info[nextNode].GetPosition();
+        if ((Time.time - timeStart) >= info[nextNode].GetTime() )  nextNode++;
     }
 
     // Calcula la millor posició per al seguent node
-    public Vector3 getBetterPosition(int pathindex)
+    /*public Vector3 GetBetterPosition(int pathindex)
     {
         int index = pathindex--;
         float distA, distB;
@@ -76,19 +79,11 @@ public class IA_Car : MonoBehaviour
         } while (distA > distB && (index - pathindex) != MaxNodesSkip);
         nextNode = index;
         return info[index].getPosition();
-    }
+    }*/
 
     private void FixedUpdate()
     {
-        //HandleMotor(1);
-        if (info[nextNode].getVelocity() > frontLeftWheelCollider.rpm)
-        {
-            HandleMotor(1);
-        } else if (info[nextNode].getVelocity() < frontLeftWheelCollider.rpm)
-        {
-            HandleMotor(0);
-        }
-
+        HandleVelocity();
         HandleSteering(CalculateAngle());
         UpdateWheels();
     }
@@ -104,6 +99,21 @@ public class IA_Car : MonoBehaviour
         if (angle < -5.0f) return -1;
         else if (angle > 5.0f) return 1;
         return 0;
+    }
+
+    private void HandleVelocity()
+    {
+        //HandleMotor(1);
+        // Com fer que es posi a la velocitat que hauria d'anar
+        if (info[nextNode].GetVelocity() > frontLeftWheelCollider.rpm)
+        {
+            HandleMotor(1);
+        }
+        else if (info[nextNode].GetVelocity() < frontLeftWheelCollider.rpm)
+        {
+            HandleMotor(0);
+        }
+        // Si diferencia entre actual i futura es molt inferior frenar
     }
 
     // Aplica velocitat a totes les rodes
@@ -133,9 +143,7 @@ public class IA_Car : MonoBehaviour
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
     {
-        Vector3 pos;
-        Quaternion rot;
-        wheelCollider.GetWorldPose(out pos, out rot);
+        wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
