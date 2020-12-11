@@ -11,11 +11,12 @@ public class PathReader : MonoBehaviour
     // Jugador a seguir
     private GameObject playerObject; 
         private Transform carTransform;
-        private PlayerController carControllerScript; 
+        private Rigidbody rb;
      
     // Temps
     private float timeStart;
 
+    // Posicions
     private Vector3 posInit;
     private Vector3 posFinal;
 
@@ -35,7 +36,7 @@ public class PathReader : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         carTransform = playerObject.transform.GetChild(0);
-        carControllerScript = playerObject.GetComponent<PlayerController>();
+        rb = playerObject.GetComponentInChildren<Rigidbody>();
         timeStart = Time.time;
         posInit = carTransform.position;
     }
@@ -47,7 +48,7 @@ public class PathReader : MonoBehaviour
         posFinal = carTransform.position;
         if (Vector3.Distance(posInit,posFinal) >= DistanceToSave)
         {
-            AddNode(new GameManager.PathInfo(carControllerScript.rpm, carTransform.position, Time.time - timeStart));
+            AddNode(new GameManager.PathInfo(rb.velocity.magnitude, carTransform.position, Time.time - timeStart));
             posInit = posFinal;
         }
     }
@@ -58,9 +59,5 @@ public class PathReader : MonoBehaviour
         gameManager.pathRegister[registerId].Add(node);
     }
 
-    // Serveix per destuir el objecte
-    private void OnDestroy()
-    {
-        AddNode(new GameManager.PathInfo(0, gameManager.startingPosition, Time.time)); //Provisional per circuits circular
-    }
+    
 }

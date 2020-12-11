@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FinishLineTrigger : MonoBehaviour
 {
-    GameManager gameManager;
+    private GameManager gameManager;
+    public int checkpointAmt;
+
     private void OnTriggerEnter(Collider other)
     {
         if (gameManager == null)
@@ -12,6 +14,18 @@ public class FinishLineTrigger : MonoBehaviour
             gameManager = FindObjectOfType<GameManager>();
         }
 
-        gameManager.FinishRound();
+        if (other.GetComponentInParent<LapController>())
+        {
+            LapController controller = other.GetComponentInParent<LapController>();
+            if (controller.checkPointIndex == checkpointAmt)
+            {
+                controller.checkPointIndex = 0;
+                controller.lapNumber++;
+                gameManager.FinishRound();
+            } else
+            {
+                Debug.Log("Not completed");
+            }
+        } 
     }
 }

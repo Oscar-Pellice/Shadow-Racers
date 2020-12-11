@@ -53,7 +53,7 @@ MonoBehaviour:
   rearLeftWheelTransform: {fileID: 2011414045959604750}
   rearRightWheelTransform: {fileID: 2011414044626496687}
   rb: {fileID: 2011414044426731452}
-  motorForce: 1000
+  motorForce: 2000
   maxSteerAngle: 10
 --- !u!1 &2011414044049480135
 GameObject:
@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2011414044183995937}
   - component: {fileID: 2011414044183995936}
+  - component: {fileID: 548516049260790363}
   m_Layer: 0
   m_Name: Front Right Wheel Collider
   m_TagString: Untagged
@@ -247,6 +248,18 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
   m_Enabled: 1
+--- !u!114 &548516049260790363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011414044183995938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479ce288b1492ae4285030de7f3a9b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2011414044297039084
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,6 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2011414044297039075}
   - component: {fileID: 2011414044297039074}
+  - component: {fileID: 7256441809875592191}
   m_Layer: 0
   m_Name: Rear Left Wheel Collider
   m_TagString: Untagged
@@ -308,6 +322,18 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
   m_Enabled: 1
+--- !u!114 &7256441809875592191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011414044297039084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479ce288b1492ae4285030de7f3a9b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2011414044426731453
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,6 +505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2011414045251624010}
   - component: {fileID: 2011414045251624009}
+  - component: {fileID: 6183304852630413167}
   m_Layer: 0
   m_Name: Front Left Wheel Collider
   m_TagString: Untagged
@@ -530,6 +557,18 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
   m_Enabled: 1
+--- !u!114 &6183304852630413167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011414045251624011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479ce288b1492ae4285030de7f3a9b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2011414045634338674
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2011414045658038608}
   - component: {fileID: 2011414045658038615}
+  - component: {fileID: 6399619377399286321}
   m_Layer: 0
   m_Name: Rear Right Wheel Collider
   m_TagString: Untagged
@@ -670,6 +710,18 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
   m_Enabled: 1
+--- !u!114 &6399619377399286321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011414045658038609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479ce288b1492ae4285030de7f3a9b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2011414045879793359
 GameObject:
   m_ObjectHideFlags: 0

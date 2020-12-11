@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class TrackController : MonoBehaviour
 {
+    public int lapNumber;
+    public int checkPointIndex;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        lapNumber = 1;
+        checkPointIndex = 0;
     }
 }

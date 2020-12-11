@@ -26,17 +26,23 @@ public class PlayerController : MonoBehaviour
     private float currentSteerAngle;
     private float currentbreakForce;
     private bool isBreaking;
-    public float rpm = 0;
 
     // Inputs
     private float horizontalInput;
     private float verticalInput;
+
+    public int playerId = 0;
     
+    public void Create(int id)
+    {
+        playerId = id;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         // Resituem el centre de massa
-        rb.centerOfMass = new Vector3 (0,-0.25f,0); // Movem el centre de massa per que no giri
+        rb.centerOfMass = new Vector3 (0,-0.25f,0.1f); // Movem el centre de massa per que no giri
     }
 
     // Update is called once per frame
@@ -63,22 +69,17 @@ public class PlayerController : MonoBehaviour
     // Apliquem força de motor
     private void HandleMotor()
     {
-        rearLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        rearRightWheelCollider.motorTorque = verticalInput * motorForce;
-        frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput * motorForce;
-        currentbreakForce = isBreaking ? breakForce : 0f;
-        ApplyBreaking();
-        rpm = frontLeftWheelCollider.rpm;
-    }
+        rearLeftWheelCollider.motorTorque = motorForce * verticalInput;
+        rearRightWheelCollider.motorTorque = motorForce * verticalInput; 
+        frontLeftWheelCollider.motorTorque = motorForce * verticalInput;
+        frontRightWheelCollider.motorTorque = motorForce * verticalInput;
 
-    // Apliquem frenat
-    private void ApplyBreaking()
-    {
-        frontRightWheelCollider.brakeTorque = currentbreakForce;
-        frontLeftWheelCollider.brakeTorque = currentbreakForce;
+        currentbreakForce = isBreaking ? breakForce : 0f;
+        //frontRightWheelCollider.brakeTorque = currentbreakForce;
+        //frontLeftWheelCollider.brakeTorque = currentbreakForce;
         rearLeftWheelCollider.brakeTorque = currentbreakForce;
         rearRightWheelCollider.brakeTorque = currentbreakForce;
+
     }
 
     // Rota les rodes

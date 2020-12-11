@@ -27,13 +27,16 @@ public class IA_Car : MonoBehaviour
     int nextNode = 0;
     private GameManager.PathInfo[] info;
     private Vector3 targetToGet;
-    private float timeStart;
-    //private const int MaxNodesSkip = 5;
-    //private const int MinDistToPoint = 3;
+
+    private float tResta = 0;
+    private float tActual = 0;
+    private const float DistMin = 2f;
 
     // Info de GameManager
     GameManager gameManager;
     int readerId;
+
+    LineRenderer lineRenderer;
 
     // Crida al fer instance
     public void Create(int id)
@@ -54,32 +57,39 @@ public class IA_Car : MonoBehaviour
         //Troba el transform del cotxe
         IAcar_transform = transform.GetChild(0);
 
-        timeStart = Time.time;
+        tResta = Time.time;
+
+
+        //For creating line renderer object
+        lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
+        lineRenderer.startColor = Color.black;
+        lineRenderer.endColor = Color.black;
+        lineRenderer.startWidth = 0.01f;
+        lineRenderer.endWidth = 0.01f;
+        lineRenderer.positionCount = info.Length;
+        lineRenderer.useWorldSpace = true;
+
+        //For drawing line in the world space, provide the x,y,z values
+        for(int i = 0; i < info.Length; i++)
+        {
+            lineRenderer.SetPosition(i, new Vector3(info[i].GetPosition().x,1, info[i].GetPosition().z)); //x,y and z position of the starting point of the line
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Busquem la millor posició al seguent node
-        //targetToGet = getBetterPosition(nextNode);
-        targetToGet = info[nextNode].GetPosition();
-        if ((Time.time - timeStart) >= info[nextNode].GetTime() )  nextNode++;
+        // Busquem al seguent node
+        tActual = Time.time - tResta;
+        if ( tActual > info[nextNode].GetTime() && Vector3.Distance(rb.position, info[nextNode].GetPosition()) < DistMin)
+        {
+            tResta = tActual - info[nextNode].GetTime();
+            targetToGet = info[nextNode].GetPosition();
+            nextNode = (nextNode+1) % info.Length;
+            Debug.Log(nextNode);
+        }
     }
 
-    // Calcula la millor posició per al seguent node
-    /*public Vector3 GetBetterPosition(int pathindex)
-    {
-        int index = pathindex--;
-        float distA, distB;
-        do
-        {
-            index++;
-            distA = Vector3.Distance(info[index].getPosition(), IAcar_transform.position);
-            distB = Vector3.Distance(info[index+1].getPosition(), IAcar_transform.position);
-        } while (distA > distB && (index - pathindex) != MaxNodesSkip);
-        nextNode = index;
-        return info[index].getPosition();
-    }*/
 
     private void FixedUpdate()
     {
@@ -103,14 +113,16 @@ public class IA_Car : MonoBehaviour
 
     private void HandleVelocity()
     {
-        //HandleMotor(1);
+        //HandleMotor(0.5f);
         // Com fer que es posi a la velocitat que hauria d'anar
-        if (info[nextNode].GetVelocity() > frontLeftWheelCollider.rpm)
+        if (info[nextNode].GetVelocity() > rb.velocity.magnitude)
         {
-            HandleMotor(1);
+            HandleMotor((rb.velocity.magnitude + info[nextNode].GetVelocity()/2)/30);
+            Debug.Log(rb.velocity.magnitude + " -> " + info[nextNode].GetVelocity());
         }
-        else if (info[nextNode].GetVelocity() < frontLeftWheelCollider.rpm)
+        else if (info[nextNode].GetVelocity() < rb.velocity.magnitude)
         {
+            Debug.Log(rb.velocity.magnitude + " -> " + info[nextNode].GetVelocity());
             HandleMotor(0);
         }
         // Si diferencia entre actual i futura es molt inferior frenar
