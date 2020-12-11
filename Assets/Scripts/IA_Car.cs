@@ -15,6 +15,8 @@ public class IA_Car : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform = null;
     [SerializeField] private Transform rearRightWheelTransform = null;
 
+
+
     // Cos del cotxe
     [SerializeField] private Rigidbody rb = null;
     private Transform IAcar_transform;

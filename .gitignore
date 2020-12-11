@@ -2,3 +2,7 @@
 /Logs
 /Packages
 /ProjectSettings
+obj
+Temp
+*.csproj
+Shadow-Racers.sln
