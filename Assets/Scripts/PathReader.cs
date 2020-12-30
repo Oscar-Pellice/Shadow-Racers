@@ -4,60 +4,89 @@ using UnityEngine;
 
 public class PathReader : MonoBehaviour
 {
-    // Game Manager
-    private GameManager gameManager;
-    private int registerId;
-    
-    // Jugador a seguir
-    private GameObject playerObject; 
-        private Transform carTransform;
-        private Rigidbody rb;
-     
-    // Temps
-    private float timeStart;
-
-    // Posicions
-    private Vector3 posInit;
-    private Vector3 posFinal;
-
-    // Segons de interval per guardar info
-    //private const float TimeToSave = 0.5f;
-    private const int DistanceToSave = 1;
-
-    // Es crida quan es crea per passar els parametres a registrar
-    public void Create(int n, GameObject player)
+    //Struct de Informació guardada del path del jugador
+    public struct Moment
     {
-        registerId = n;
-        playerObject = player;
-    }
+        public float velocity;
+        public float time;
+        public Vector3 position;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-        carTransform = playerObject.transform.GetChild(0);
-        rb = playerObject.GetComponentInChildren<Rigidbody>();
-        timeStart = Time.time;
-        posInit = carTransform.position;
-    }
-
-    
-    // Update is called once per frame
-    void Update()
-    {
-        posFinal = carTransform.position;
-        if (Vector3.Distance(posInit,posFinal) >= DistanceToSave)
+        public Moment(float rpm, Vector3 playerPosition, float temps)
         {
-            AddNode(new GameManager.PathInfo(rb.velocity.magnitude, carTransform.position, Time.time - timeStart));
-            posInit = posFinal;
+            velocity = rpm;
+            position = playerPosition;
+            time = temps;
         }
     }
 
-    // Afegeix un node al PathRegister en el GameManager
-    private void AddNode(GameManager.PathInfo node)
+    public struct RegisterInfo
     {
-        gameManager.pathRegister[registerId].Add(node);
+        public List<List<Moment>> carreresPlayer;
+        public int playerId;
+        public GameObject playerObject;
+
+        public RegisterInfo(int id)
+        {
+            carreresPlayer = new List<List<Moment>>();
+            playerId = id;
+            playerObject = null;
+        }
+
+        public void AddObject(GameObject obj)
+        {
+            carreresPlayer.Add(new List<Moment>());
+            playerObject = obj;
+        }
     }
 
-    
+    public List<RegisterInfo> registre;
+
+    // Array de jugadors a seguir
+    private List<float> timesList;
+    private List<Vector3> posList;
+
+    // Segons de interval per guardar info
+    private const int DistanceToSave = 1;
+
+    private void Awake()
+    {
+        registre = new List<RegisterInfo>();
+        timesList = new List<float>();
+        posList = new List<Vector3>();
+    }
+
+    // Es crida quan es crea per passar els parametres a registrar
+    public void CreatePlayer(int id)
+    {
+        registre.Add(new RegisterInfo(id));
+    }
+
+    public void AddRoundPlayer(int id, GameObject player)
+    {
+        Debug.LogWarning(player.transform.position);
+        registre[id].AddObject(player);
+        timesList.Add(Time.time);
+        posList.Add(player.transform.GetChild(0).position);
+        Debug.LogWarning(registre[0].playerObject.transform.position);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        for (int i = 0; i < registre.Count; i++)
+        {
+            if (Vector3.Distance(posList[i],registre[i].playerObject.transform.GetChild(0).position) >= DistanceToSave)
+            {
+                registre[i].carreresPlayer[registre[i].carreresPlayer.Count-1].Add(new Moment(registre[i].playerObject.GetComponentInChildren<Rigidbody>().velocity.magnitude,
+                    registre[i].playerObject.transform.GetChild(0).position,
+                    Time.time - timesList[i]));
+                posList[i] = registre[i].playerObject.transform.GetChild(0).position;
+            }
+        }
+    }    
+
+    public List<Moment> getRace(int player, int round)
+    {
+        return registre[player].carreresPlayer[round];
+    }
 }

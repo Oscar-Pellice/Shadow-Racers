@@ -9,7 +9,7 @@ public class ApplyWheelPhysics : MonoBehaviour
     {
         wheel = GetComponent<WheelCollider>();
     }
-    // static friction of the ground material.
+
     void FixedUpdate()
     {
         WheelHit hit;

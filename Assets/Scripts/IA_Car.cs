@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class IA_Car : MonoBehaviour
@@ -15,8 +14,6 @@ public class IA_Car : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform = null;
     [SerializeField] private Transform rearRightWheelTransform = null;
 
-
-
     // Cos del cotxe
     [SerializeField] private Rigidbody rb = null;
     private Transform IAcar_transform;
@@ -27,7 +24,8 @@ public class IA_Car : MonoBehaviour
 
     // Control de nodes
     int nextNode = 0;
-    private GameManager.PathInfo[] info;
+    //private GameManager.PathInfo[] info;
+    private List<PathReader.Moment> raceInfo;
     private Vector3 targetToGet;
 
     private float tResta = 0;
@@ -40,19 +38,15 @@ public class IA_Car : MonoBehaviour
 
     LineRenderer lineRenderer;
 
-    // Crida al fer instance
-    public void Create(int id)
+
+    public void AssignRace(List<PathReader.Moment> race)
     {
-        readerId = id;
+        raceInfo = race;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        // Recolleix info del gameManager
-        gameManager = FindObjectOfType<GameManager>();
-        info = gameManager.pathRegister[readerId].ToArray();
-
         // Resitua el centre de massa
         rb.centerOfMass = new Vector3(0, -0.25f, 0);
 
@@ -68,13 +62,13 @@ public class IA_Car : MonoBehaviour
         lineRenderer.endColor = Color.black;
         lineRenderer.startWidth = 0.01f;
         lineRenderer.endWidth = 0.01f;
-        lineRenderer.positionCount = info.Length;
+        lineRenderer.positionCount = raceInfo.Count;
         lineRenderer.useWorldSpace = true;
 
         //For drawing line in the world space, provide the x,y,z values
-        for(int i = 0; i < info.Length; i++)
+        for(int i = 0; i < raceInfo.Count; i++)
         {
-            lineRenderer.SetPosition(i, new Vector3(info[i].GetPosition().x,1, info[i].GetPosition().z)); //x,y and z position of the starting point of the line
+            lineRenderer.SetPosition(i, new Vector3(raceInfo[i].position.x,1, raceInfo[i].position.z)); //x,y and z position of the starting point of the line
         }
     }
 
@@ -83,15 +77,14 @@ public class IA_Car : MonoBehaviour
     {
         // Busquem al seguent node
         tActual = Time.time - tResta;
-        if ( tActual > info[nextNode].GetTime() && Vector3.Distance(rb.position, info[nextNode].GetPosition()) < DistMin)
+        if ( tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
         {
-            tResta = tActual - info[nextNode].GetTime();
-            targetToGet = info[nextNode].GetPosition();
-            nextNode = (nextNode+1) % info.Length;
+            tResta = tActual - raceInfo[nextNode].time;
+            targetToGet = raceInfo[nextNode].position;
+            nextNode = (nextNode+1) % raceInfo.Count;
             Debug.Log(nextNode);
         }
     }
-
 
     private void FixedUpdate()
     {
@@ -117,14 +110,14 @@ public class IA_Car : MonoBehaviour
     {
         //HandleMotor(0.5f);
         // Com fer que es posi a la velocitat que hauria d'anar
-        if (info[nextNode].GetVelocity() > rb.velocity.magnitude)
+        if (raceInfo[nextNode].velocity > rb.velocity.magnitude)
         {
-            HandleMotor((rb.velocity.magnitude + info[nextNode].GetVelocity()/2)/30);
-            Debug.Log(rb.velocity.magnitude + " -> " + info[nextNode].GetVelocity());
+            HandleMotor((rb.velocity.magnitude + raceInfo[nextNode].velocity/2)/30);
+            Debug.Log(rb.velocity.magnitude + " -> " + raceInfo[nextNode].velocity);
         }
-        else if (info[nextNode].GetVelocity() < rb.velocity.magnitude)
+        else if (raceInfo[nextNode].velocity < rb.velocity.magnitude)
         {
-            Debug.Log(rb.velocity.magnitude + " -> " + info[nextNode].GetVelocity());
+            Debug.Log(rb.velocity.magnitude + " -> " + raceInfo[nextNode].velocity);
             HandleMotor(0);
         }
         // Si diferencia entre actual i futura es molt inferior frenar
