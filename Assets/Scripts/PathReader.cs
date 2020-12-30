@@ -5,7 +5,7 @@ using UnityEngine;
 public class PathReader : MonoBehaviour
 {
     //Struct de Informació guardada del path del jugador
-    public struct Moment
+    public class Moment
     {
         public float velocity;
         public float time;
@@ -19,7 +19,7 @@ public class PathReader : MonoBehaviour
         }
     }
 
-    public struct RegisterInfo
+    public class RegisterInfo
     {
         public List<List<Moment>> carreresPlayer;
         public int playerId;
@@ -36,6 +36,7 @@ public class PathReader : MonoBehaviour
         {
             carreresPlayer.Add(new List<Moment>());
             playerObject = obj;
+            Debug.LogError("");
         }
     }
 
