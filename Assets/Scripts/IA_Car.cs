@@ -41,7 +41,7 @@ public class IA_Car : MonoBehaviour
 
     public void AssignRace(List<PathReader.Moment> race)
     {
-        raceInfo = race;
+        raceInfo = new List<PathReader.Moment>(race);
     }
 
     // Start is called before the first frame update
@@ -82,7 +82,6 @@ public class IA_Car : MonoBehaviour
             tResta = tActual - raceInfo[nextNode].time;
             targetToGet = raceInfo[nextNode].position;
             nextNode = (nextNode+1) % raceInfo.Count;
-            Debug.Log(nextNode);
         }
     }
 
@@ -113,11 +112,9 @@ public class IA_Car : MonoBehaviour
         if (raceInfo[nextNode].velocity > rb.velocity.magnitude)
         {
             HandleMotor((rb.velocity.magnitude + raceInfo[nextNode].velocity/2)/30);
-            Debug.Log(rb.velocity.magnitude + " -> " + raceInfo[nextNode].velocity);
         }
         else if (raceInfo[nextNode].velocity < rb.velocity.magnitude)
         {
-            Debug.Log(rb.velocity.magnitude + " -> " + raceInfo[nextNode].velocity);
             HandleMotor(0);
         }
         // Si diferencia entre actual i futura es molt inferior frenar
