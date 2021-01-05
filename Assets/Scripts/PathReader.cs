@@ -40,11 +40,13 @@ public class PathReader : MonoBehaviour
     public RegisterInfo registre;
 
     // Array de jugadors a seguir
-    private float timesList;
-    private Vector3 posList;
+    private float time;
+    private Vector3 position;
 
     // Segons de interval per guardar info
     private const int DistanceToSave = 1;
+
+    private bool ended = false;
 
     private void Awake()
     {
@@ -54,20 +56,19 @@ public class PathReader : MonoBehaviour
     public void AddRoundPlayer(GameObject player)
     {
         registre.AddObject(player);
-        timesList = Time.time;
-        posList = player.transform.GetChild(0).position;
+        time = Time.time;
+        position = player.transform.GetChild(0).position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (Vector3.Distance(posList,registre.playerObject.transform.GetChild(0).position) >= DistanceToSave)
+        if (Vector3.Distance(position,registre.playerObject.transform.GetChild(0).position) >= DistanceToSave)
         {
             registre.carreresPlayer[registre.carreresPlayer.Count-1].Add(new Moment(registre.playerObject.GetComponentInChildren<Rigidbody>().velocity.magnitude,
                 registre.playerObject.transform.GetChild(0).position,
-                Time.time - timesList));
-            posList = registre.playerObject.transform.GetChild(0).position;
+                Time.time - time));
+            position = registre.playerObject.transform.GetChild(0).position;
         }
         
     }    

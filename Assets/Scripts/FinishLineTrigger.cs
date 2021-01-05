@@ -5,7 +5,7 @@ using UnityEngine;
 public class FinishLineTrigger : MonoBehaviour
 {
     private GameManager gameManager;
-    public int checkpointAmt;
+    public int checkpointMax;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,11 +17,14 @@ public class FinishLineTrigger : MonoBehaviour
         if (other.GetComponentInParent<LapController>())
         {
             LapController controller = other.GetComponentInParent<LapController>();
-            if (controller.checkPointIndex == checkpointAmt)
+            if (controller.checkPointIndex == checkpointMax)
             {
                 controller.checkPointIndex = 0;
-                controller.lapNumber++;
-                gameManager.FinishRound();
+                gameManager.AddRoundTime(other.transform.parent.parent.gameObject, UIManager.Instance.timer);
+                if (gameManager.roundFlag == 0)
+                {
+                    gameManager.FinishRound();
+                }
             } else
             {
                 Debug.Log("Not completed");

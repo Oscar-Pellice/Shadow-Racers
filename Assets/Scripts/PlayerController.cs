@@ -27,16 +27,19 @@ public class PlayerController : MonoBehaviour
     private float currentSteerAngle;
     private float currentbreakForce;
     private bool isBreaking;
+    private bool isTabing;
 
     // Inputs
     private float horizontalInput;
     private float verticalInput;
 
-    PhotonView PV;
+    private PhotonView PV;
+    private Func<GameManager> gameManager;
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+        gameManager = FindObjectOfType<GameManager>;
     }
 
     // Start is called before the first frame update
@@ -44,7 +47,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!PV.IsMine)
         {
-            Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(this.transform.Find("Camera").gameObject);
+            Destroy(this.transform.Find("Minimap").gameObject);
         }
 
         // Resituem el centre de massa
@@ -65,11 +69,14 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
+        isTabing = Input.GetKey(KeyCode.Tab);
     }
 
     private void FixedUpdate()
     {
         if (!PV.IsMine) return;
+        if (UIManager.Instance.tab && !isTabing) UIManager.Instance.tab = false;
+        if (!UIManager.Instance.tab && isTabing) UIManager.Instance.tab = true;
 
         HandleMotor();
         HandleSteering();
