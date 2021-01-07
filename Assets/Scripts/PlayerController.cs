@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody rb = null;
 
     // Factors de control del cotxe
-    [SerializeField] private float motorForce = 0;
+    [SerializeField] public float motorForce = 0;
     [SerializeField] private float breakForce = 0;
     [SerializeField] private float maxSteerAngle = 0;
     private float currentSteerAngle;
