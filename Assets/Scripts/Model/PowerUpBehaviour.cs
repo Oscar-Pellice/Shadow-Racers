@@ -15,14 +15,15 @@ public class PowerUpBehaviour : MonoBehaviour
 
     private Transform transform_;
 
+
     public Material PowerupMaterial
     {
         get { return renderer_.material; }
         set { renderer_.material = value; }
     }
     #endregion
-    
 
+    private float timer;
     #endregion
 
     #region Monobehaviour API
@@ -34,11 +35,11 @@ public class PowerUpBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         //Importante si cambiamos el tag de player 
         //para otros modos habra que modificar esto
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.name == "Body")
         {
-            Debug.Log("Collision");
             ActivatePowerup();
         }
     }
@@ -48,11 +49,30 @@ public class PowerUpBehaviour : MonoBehaviour
     private void ActivatePowerup()
     {
         controller.ActivatePowerup(powerup);
+        renderer_.enabled = false;
+        timer = powerup.duration;
+        
     }
 
     public void SetPowerup(PowerUp powerup)
     {
         this.powerup = powerup;
         gameObject.name = powerup.name;
+    }
+    private void Start()
+    {
+        renderer_ = GetComponent<MeshRenderer>();
+    }
+    private void Update()
+    {
+        if (!renderer_.enabled)
+        {
+            timer -= 1 * Time.deltaTime;
+            if(timer < 0)
+            {
+                timer = 0;
+                renderer_.enabled = true;
+            }
+        }
     }
 }

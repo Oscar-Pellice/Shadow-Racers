@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 98049495}
   - component: {fileID: 98049497}
   - component: {fileID: 98049496}
+  - component: {fileID: 98049498}
   m_Layer: 0
   m_Name: PowerUpController
   m_TagString: Untagged
@@ -214,6 +215,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &98049498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98049494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75be0a408eca93646a9d95630e4595d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1407481486}
 --- !u!1 &133751550
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
       propertyPath: powerup.duration
-      value: 3
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
       propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -802,6 +816,10 @@ PrefabInstance:
       propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 98049497}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
 --- !u!1 &1075054042
@@ -1130,7 +1148,7 @@ BoxCollider:
   m_GameObject: {fileID: 1407481484}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.9865494, y: 0.9359665, z: 4.5419827}
   m_Center: {x: -0.0019111633, y: 0.032016754, z: 0.04506588}
@@ -1267,6 +1285,143 @@ Transform:
   m_Father: {fileID: 1781495236}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1459191568
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5067505825112241567, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_Name
+      value: Deaccel_PowerUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 119.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4823719
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4823719
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977894670168165992, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.4823719
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.name
+      value: SpeedDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.duration
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 98049498}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DeacceleratePowerUp, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SlowSpeedStartAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 98049498}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DeacceleratePowerUp, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SlowSpeedEndAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830663897063104406, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 98049497}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 42d8c7bd97f20814bbd7bf20d5d577ee, type: 3}
 --- !u!1 &1781495235
 GameObject:
   m_ObjectHideFlags: 0
