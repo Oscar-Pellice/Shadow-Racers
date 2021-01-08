@@ -30,7 +30,7 @@ public class IA_Car : MonoBehaviour
 
     private float tResta = 0;
     private float tActual = 0;
-    private const float DistMin = 2f;
+    private const float DistMin = 5f;
 
     // Info de GameManager
     GameManager gameManager;
@@ -80,7 +80,7 @@ public class IA_Car : MonoBehaviour
         tActual = Time.time - tResta;
         if ( tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
         {
-            tResta = tActual - raceInfo[nextNode].time;
+            //tResta = tActual - raceInfo[nextNode].time;
             targetToGet = raceInfo[nextNode].position;
             nextNode = (nextNode+1) % raceInfo.Count;
         }

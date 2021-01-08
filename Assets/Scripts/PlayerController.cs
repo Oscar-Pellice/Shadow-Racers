@@ -52,14 +52,13 @@ public class PlayerController : MonoBehaviour
         }
 
         // Resituem el centre de massa
-        rb.centerOfMass = new Vector3 (0,-0.25f,0.1f); // Movem el centre de massa per que no giri
+        rb.centerOfMass = new Vector3 (0,-0.25f,0f); // Movem el centre de massa per que no giri
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!PV.IsMine) return;
-
         GetInput();
     }
 
