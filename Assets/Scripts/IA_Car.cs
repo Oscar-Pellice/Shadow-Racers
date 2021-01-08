@@ -30,7 +30,7 @@ public class IA_Car : MonoBehaviour
 
     private float tResta = 0;
     private float tActual = 0;
-    private const float DistMin = 2f;
+    private const float DistMin = 5f;
 
     // Info de GameManager
     GameManager gameManager;
@@ -41,7 +41,22 @@ public class IA_Car : MonoBehaviour
 
     public void AssignRace(List<PathReader.Moment> race)
     {
-        raceInfo = race;
+        raceInfo = new List<PathReader.Moment>(race);
+        
+        //For creating line renderer object
+        lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
+        lineRenderer.startColor = Color.black;
+        lineRenderer.endColor = Color.black;
+        lineRenderer.startWidth = 0.01f;
+        lineRenderer.endWidth = 0.01f;
+        lineRenderer.positionCount = raceInfo.Count;
+        lineRenderer.useWorldSpace = true;
+        
+        //For drawing line in the world space, provide the x,y,z values
+        for(int i = 0; i < raceInfo.Count; i++)
+        {
+            lineRenderer.SetPosition(i, new Vector3(raceInfo[i].position.x,1, raceInfo[i].position.z)); //x,y and z position of the starting point of the line
+        }
     }
 
     // Start is called before the first frame update
@@ -54,40 +69,27 @@ public class IA_Car : MonoBehaviour
         IAcar_transform = transform.GetChild(0);
 
         tResta = Time.time;
-
-
-        //For creating line renderer object
-        lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
-        lineRenderer.startColor = Color.black;
-        lineRenderer.endColor = Color.black;
-        lineRenderer.startWidth = 0.01f;
-        lineRenderer.endWidth = 0.01f;
-        lineRenderer.positionCount = raceInfo.Count;
-        lineRenderer.useWorldSpace = true;
-
-        //For drawing line in the world space, provide the x,y,z values
-        for(int i = 0; i < raceInfo.Count; i++)
-        {
-            lineRenderer.SetPosition(i, new Vector3(raceInfo[i].position.x,1, raceInfo[i].position.z)); //x,y and z position of the starting point of the line
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (raceInfo == null) return;
+
         // Busquem al seguent node
         tActual = Time.time - tResta;
         if ( tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
         {
-            tResta = tActual - raceInfo[nextNode].time;
+            //tResta = tActual - raceInfo[nextNode].time;
             targetToGet = raceInfo[nextNode].position;
             nextNode = (nextNode+1) % raceInfo.Count;
-            Debug.Log(nextNode);
         }
     }
 
     private void FixedUpdate()
     {
+        if (raceInfo == null) return;
+
         HandleVelocity();
         HandleSteering(CalculateAngle());
         UpdateWheels();
@@ -113,11 +115,9 @@ public class IA_Car : MonoBehaviour
         if (raceInfo[nextNode].velocity > rb.velocity.magnitude)
         {
             HandleMotor((rb.velocity.magnitude + raceInfo[nextNode].velocity/2)/30);
-            Debug.Log(rb.velocity.magnitude + " -> " + raceInfo[nextNode].velocity);
         }
         else if (raceInfo[nextNode].velocity < rb.velocity.magnitude)
         {
-            Debug.Log(rb.velocity.magnitude + " -> " + raceInfo[nextNode].velocity);
             HandleMotor(0);
         }
         // Si diferencia entre actual i futura es molt inferior frenar

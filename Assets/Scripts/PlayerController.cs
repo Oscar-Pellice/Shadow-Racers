@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,28 +27,38 @@ public class PlayerController : MonoBehaviour
     private float currentSteerAngle;
     private float currentbreakForce;
     private bool isBreaking;
+    private bool isTabing;
 
     // Inputs
     private float horizontalInput;
     private float verticalInput;
 
-    public int playerId = 0;
-    
-    public void Create(int id)
+    private PhotonView PV;
+    private Func<GameManager> gameManager;
+
+    private void Awake()
     {
-        playerId = id;
+        PV = GetComponent<PhotonView>();
+        gameManager = FindObjectOfType<GameManager>;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        if (!PV.IsMine)
+        {
+            Destroy(this.transform.Find("Camera").gameObject);
+            Destroy(this.transform.Find("Minimap").gameObject);
+        }
+
         // Resituem el centre de massa
-        rb.centerOfMass = new Vector3 (0,-0.25f,0.1f); // Movem el centre de massa per que no giri
+        rb.centerOfMass = new Vector3 (0,-0.25f,0f); // Movem el centre de massa per que no giri
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!PV.IsMine) return;
         GetInput();
     }
 
@@ -57,10 +68,15 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
+        isTabing = Input.GetKey(KeyCode.Tab);
     }
 
     private void FixedUpdate()
     {
+        if (!PV.IsMine) return;
+        if (UIManager.Instance.tab && !isTabing) UIManager.Instance.tab = false;
+        if (!UIManager.Instance.tab && isTabing) UIManager.Instance.tab = true;
+
         HandleMotor();
         HandleSteering();
         UpdateWheels();
@@ -75,11 +91,8 @@ public class PlayerController : MonoBehaviour
         frontRightWheelCollider.motorTorque = motorForce * verticalInput;
 
         currentbreakForce = isBreaking ? breakForce : 0f;
-        //frontRightWheelCollider.brakeTorque = currentbreakForce;
-        //frontLeftWheelCollider.brakeTorque = currentbreakForce;
         rearLeftWheelCollider.brakeTorque = currentbreakForce;
         rearRightWheelCollider.brakeTorque = currentbreakForce;
-
     }
 
     // Rota les rodes
