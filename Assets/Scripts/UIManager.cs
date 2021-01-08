@@ -70,16 +70,16 @@ public class UIManager : MonoBehaviour
     {
         float[] infoTimes = (float[])GameManager.Instance.times.Clone();
         setTime(Time1_1_1, infoTimes[0]);
-        setTime(Time1_2_1, infoTimes[1]);
-        setTime(Time1_2_2, infoTimes[2]);
-        setTime(Time1_3_1, infoTimes[3]);
-        setTime(Time1_3_2, infoTimes[4]);
-        setTime(Time1_3_3, infoTimes[5]);
-        setTime(Time2_1_1, infoTimes[6]);
-        setTime(Time2_2_1, infoTimes[7]);
-        setTime(Time2_2_2, infoTimes[8]);
-        setTime(Time2_3_1, infoTimes[9]);
-        setTime(Time2_3_2, infoTimes[10]);
+        setTime(Time1_2_1, infoTimes[2]);
+        setTime(Time1_2_2, infoTimes[4]);
+        setTime(Time1_3_1, infoTimes[6]);
+        setTime(Time1_3_2, infoTimes[8]);
+        setTime(Time1_3_3, infoTimes[10]);
+        setTime(Time2_1_1, infoTimes[1]);
+        setTime(Time2_2_1, infoTimes[3]);
+        setTime(Time2_2_2, infoTimes[5]);
+        setTime(Time2_3_1, infoTimes[7]);
+        setTime(Time2_3_2, infoTimes[9]);
         setTime(Time2_3_3, infoTimes[11]);
         tabContainer.SetActive(true);
     }

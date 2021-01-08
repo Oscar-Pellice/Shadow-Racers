@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
                 times[5] = timer;
             }
         }
-        else if (round == 1)
+        else if (round == 2)
         {
             if (gameObject.name == "Player")
             {
