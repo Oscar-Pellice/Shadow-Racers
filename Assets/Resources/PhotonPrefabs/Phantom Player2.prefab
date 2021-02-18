@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 954853266419708585}
   m_Layer: 0
   m_Name: Wheel Colliders
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 6612314820596514223}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 954853266920262635}
   m_Layer: 0
   m_Name: Wheel Transforms
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -782,9 +782,10 @@ GameObject:
   - component: {fileID: 8009724206439393443}
   - component: {fileID: 2191176544826009215}
   - component: {fileID: 6835444716250586738}
+  - component: {fileID: 3012343073642519470}
   m_Layer: 0
   m_Name: Phantom Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -862,6 +863,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkPointIndex: 0
+--- !u!114 &3012343073642519470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624839813581850434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ca5d87005164a4c977aea95681c823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2756019844228229727
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +889,7 @@ GameObject:
   - component: {fileID: 4969212405042189571}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -972,7 +985,7 @@ GameObject:
   - component: {fileID: 7973089922186665413}
   m_Layer: 8
   m_Name: MinimapIcon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
