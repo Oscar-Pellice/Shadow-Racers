@@ -125,6 +125,8 @@ public class GameManager : MonoBehaviour
 
     public void FinishRound()
     {
+        //SaveInfo.Instance.SaveIntoJson(pathReader.getRace(0));
+
         StartCoroutine(EndRound());
     }
 

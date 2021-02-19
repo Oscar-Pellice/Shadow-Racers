@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1607148405441896878}
   m_Layer: 8
   m_Name: MinimapIcon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -554,7 +554,7 @@ GameObject:
   - component: {fileID: 6989712005982063372}
   m_Layer: 0
   m_Name: Wheel Colliders
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -591,7 +591,7 @@ GameObject:
   - component: {fileID: 1849531224098101349}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 6989712006407139918}
   m_Layer: 0
   m_Name: Wheel Transforms
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -868,9 +868,10 @@ GameObject:
   - component: {fileID: 6989712006764915841}
   - component: {fileID: 7498347171515062090}
   - component: {fileID: 4000193444495344650}
+  - component: {fileID: 2531993023502798772}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -946,6 +947,18 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 10
+--- !u!114 &2531993023502798772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989712006764915840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ca5d87005164a4c977aea95681c823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8848646132289257191
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +973,7 @@ GameObject:
   - component: {fileID: 4671008022872390889}
   m_Layer: 0
   m_Name: Phantom Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
