@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private PhotonView PV;
     private Func<GameManager> gameManager;
 
+    private PowerUp powerUp;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -69,6 +71,11 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
         isTabing = Input.GetKey(KeyCode.Tab);
+        if (Input.GetKeyDown("Space"))
+        {
+            //powerUp activate
+            this.powerUp.Start();
+        }
     }
 
     private void FixedUpdate()
@@ -117,5 +124,10 @@ public class PlayerController : MonoBehaviour
         wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    public void addPowerUp(PowerUp power)
+    {
+        this.powerUp = power;
     }
 }
