@@ -123,73 +123,73 @@ NavMeshSettings:
   m_NavMeshData: {fileID: 0}
 --- !u!108 &705507994 stripped
 Light:
-  m_CorrespondingSourceObject: {fileID: 1721603119282910744, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+  m_CorrespondingSourceObject: {fileID: 1672098231090431714, guid: 48947f30b2aa8244d9963a1f5ea5072b,
     type: 3}
-  m_PrefabInstance: {fileID: 1721603118912947330}
+  m_PrefabInstance: {fileID: 1672098230721672312}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1721603118912947330
+--- !u!1001 &1672098230721672312
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2042640672349014089, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 5654948767224883226, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_Name
       value: Scene_SugarLand_Simple
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2744.8074
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -631.0742
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 85.67859
+      value: -515.89
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4434141232241349867, guid: 48947f30b2aa8244d9963a1f5ea5072b,
+    - target: {fileID: 7220968371060672622, guid: 48947f30b2aa8244d9963a1f5ea5072b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
