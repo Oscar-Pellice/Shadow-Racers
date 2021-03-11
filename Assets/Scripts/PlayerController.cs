@@ -43,8 +43,10 @@ public class PlayerController : MonoBehaviour
     private float tResta = 0;
     private float tActual = 0;
     private const float DistMin = 5f;
-    LineRenderer lineRenderer;
-    Transform car_transform;
+    private LineRenderer lineRenderer;
+    private Transform car_transform;
+
+    private int status = 0;
 
     private void Awake()
     {
