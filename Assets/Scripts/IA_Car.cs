@@ -38,6 +38,7 @@ public class IA_Car : MonoBehaviour
 
     LineRenderer lineRenderer;
 
+    private bool isMovable = false;
 
     public void AssignRace(List<PathReader.Moment> race)
     {
@@ -153,5 +154,10 @@ public class IA_Car : MonoBehaviour
         wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    public void StartMovement()
+    {
+        isMovable = true;
     }
 }

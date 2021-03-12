@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
     LineRenderer lineRenderer;
     Transform car_transform;
 
+    private bool isMovable = false;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -89,15 +91,18 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine) return;
         GetInput();
 
-        if (ableAutomatic == true)
+        if (isMovable)
         {
-            // Busquem al seguent node
-            tActual = Time.time - tResta;
-            if (tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+            if (ableAutomatic)
             {
-                //tResta = tActual - raceInfo[nextNode].time;
-                targetToGet = raceInfo[nextNode].position;
-                nextNode = (nextNode + 1) % raceInfo.Count;
+                // Busquem al seguent node
+                tActual = Time.time - tResta;
+                if (tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+                {
+                    //tResta = tActual - raceInfo[nextNode].time;
+                    targetToGet = raceInfo[nextNode].position;
+                    nextNode = (nextNode + 1) % raceInfo.Count;
+                }
             }
         }
     }
@@ -121,18 +126,21 @@ public class PlayerController : MonoBehaviour
         if (UIManager.Instance.tab && !isTabing) UIManager.Instance.tab = false;
         if (!UIManager.Instance.tab && isTabing) UIManager.Instance.tab = true;
 
-        if (ableAutomatic == false)
+        if (isMovable)
         {
-            HandleMotor(verticalInput);
-            HandleSteering(horizontalInput);
-            UpdateWheels();
-        } else
-        {
-            HandleVelocity();
-            HandleSteering(CalculateAngle());
-            UpdateWheels();
+            if (ableAutomatic == false)
+            {
+                HandleMotor(verticalInput);
+                HandleSteering(horizontalInput);
+                UpdateWheels();
+            }
+            else
+            {
+                HandleVelocity();
+                HandleSteering(CalculateAngle());
+                UpdateWheels();
+            }
         }
-        
     }
 
     // Calcula el angle entre el cotxe i el node
@@ -197,5 +205,10 @@ public class PlayerController : MonoBehaviour
         wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    public void StartMovement()
+    {
+        isMovable = true;
     }
 }

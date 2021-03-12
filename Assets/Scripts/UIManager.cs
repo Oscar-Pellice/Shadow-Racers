@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text Time2_3_2;
     [SerializeField] private TMP_Text Time2_3_3;
 
+    [SerializeField] private GameObject background;
+    [SerializeField] private GameObject winnerPage;
+
+
     public static UIManager Instance;
 
     private void Awake()
@@ -102,5 +106,11 @@ public class UIManager : MonoBehaviour
     public void StartRoundUI()
     {
         timer = 0f;
+    }
+
+    public void ShowResults()
+    {
+        background.SetActive(true);
+        winnerPage.SetActive(true);
     }
 }

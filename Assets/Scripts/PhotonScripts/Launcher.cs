@@ -93,6 +93,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        PhotonNetwork.LoadLevel(0);
         MenuManager.Instance.OpenMenu("Title");
     }
 
@@ -121,6 +122,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
     public void StartGame()
     {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
         PhotonNetwork.LoadLevel(1);
     }
 

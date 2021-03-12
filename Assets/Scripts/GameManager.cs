@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
         player = new Player(id);
 
         StartPlayer();
+        playerGameObject.GetComponent<PlayerController>().StartMovement();
     }
 
     private void StartPlayer()
@@ -115,10 +116,19 @@ public class GameManager : MonoBehaviour
             phantom.name = prefabName + " - " + r.ToString();
             phantomCars.Add(phantom);
             phantom.GetComponent<IA_Car>().AssignRace(pathReader.getRace(r));
-            yield return new WaitForSecondsRealtime(3);
+            yield return new WaitForSecondsRealtime(1);
         }
 
         StartPlayer();
+
+        //Timer
+
+        foreach (GameObject p in phantomCars)
+        {
+            p.GetComponent<IA_Car>().StartMovement();
+        }
+        playerGameObject.GetComponent<PlayerController>().StartMovement();
+
         UIManager.Instance.StartRoundUI();
         roundFlag = 0;
     }
@@ -136,12 +146,14 @@ public class GameManager : MonoBehaviour
         round++;
         yield return new WaitForSecondsRealtime(2);
         foreach (GameObject obj in phantomCars) Destroy(obj);
+        pathReader.StopReading();
+        Destroy(playerGameObject);
         if (round < MaxRounds)
         {
             StartRound();
         } else
         {
-            //Acabar
+            UIManager.Instance.ShowResults();
         }
     }
 
