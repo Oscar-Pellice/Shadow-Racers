@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     private int round = 0;
     public int roundFlag = 0;
     private const int MaxRounds = 3;
-    private Vector3[] startingPosition = { new Vector3(125, 1, -20), new Vector3(130, 1, -20) };
+    private Vector3[] startingPosition = { new Vector3(127, 1, 1), new Vector3(120, 1, 1), new Vector3(127, 1, -6), new Vector3(120, 1, -6), new Vector3(127, 1, -13), new Vector3(120, 1, -13) };
 
     private void Awake()
     {
@@ -77,12 +77,12 @@ public class GameManager : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), startingPosition[player.player_id], Quaternion.identity);
+            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), startingPosition[round*2 + player.player_id], Quaternion.identity);
             playerGameObject.name = "Player";
         }
         else
         {
-            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player2"), startingPosition[player.player_id], Quaternion.identity);
+            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player2"), startingPosition[round*2 + player.player_id], Quaternion.identity);
             playerGameObject.name = "Player2";
         }
 
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 
         for (int r = 0; r < round; r++)
         {
-            phantom = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", prefabName), startingPosition[player.player_id], Quaternion.identity);
+            phantom = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", prefabName), startingPosition[r*2 + player.player_id], Quaternion.identity);
             phantom.name = prefabName + " - " + r.ToString();
             phantomCars.Add(phantom);
             phantom.GetComponent<IA_Car>().AssignRace(pathReader.getRace(r));
