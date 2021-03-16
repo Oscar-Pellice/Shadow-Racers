@@ -9,3 +9,13 @@ Shadow-Racers.sln
 Build
 .vs
 Builds
+Assets/Photon/PhotonUtilities/PackObject/CodeGen/Editor/Resources/TypeCatalogue.asset
+Assets/Resources/Track_1.unitypackage
+Assets/Resources/Track_1.unitypackage.meta
+Assets/Photon/PhotonUtilities/PackObject/_GeneratedPackExtensions/Pack_TestPackObject.cs
+Assets/Photon/PhotonUtilities/PackObject/CodeGen/Editor/Resources/TypeCatalogue.asset
+Assets/Photon/PhotonUtilities/PackObject/CodeGen/Editor/Resources/TypeCatalogue.asset
+Assets/Resources/Track_2.unitypackage.meta
+Assets/Scenes/Scene_SugarLand_Simple.unity
+Assets/Scenes/Scene_SugarLand_Simple.unity.meta
+Assets/Resources/Track_2.unitypackage
