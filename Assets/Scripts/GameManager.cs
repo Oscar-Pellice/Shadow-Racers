@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     private int round = 0;
     public int roundFlag = 0;
     private const int MaxRounds = 3;
-    private Vector3[] startingPosition = { new Vector3(5, 7, -512), new Vector3(-4, 7, -512), new Vector3(5, 7, -520), new Vector3(-4, 7, -520), new Vector3(5, 7, -528), new Vector3(-4, 7, -520) };
+    private Vector3[] startingPosition = { new Vector3(20, 200, -370), new Vector3(28, 200, -370), new Vector3(20, 200, -380), new Vector3(28, 200, -380), new Vector3(20, 200, -390), new Vector3(28, 200, -390) };
 
     private void Awake()
     {

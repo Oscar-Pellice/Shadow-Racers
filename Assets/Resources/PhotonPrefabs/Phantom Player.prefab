@@ -1014,7 +1014,7 @@ MonoBehaviour:
   rearLeftWheelTransform: {fileID: 6989712005102786867}
   rearRightWheelTransform: {fileID: 6989712005900386194}
   rb: {fileID: 6989712006764915841}
-  motorForce: 2000
+  motorForce: 4000
   maxSteerAngle: 10
 --- !u!114 &8226031979914387418
 MonoBehaviour:

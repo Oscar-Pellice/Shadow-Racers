@@ -11,6 +11,9 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float translateSpeed = 0;
     [SerializeField] private float rotationSpeed = 0;
 
+    [SerializeField] private float varProva = 0;
+    [SerializeField] private float varProva2 = 0;
+
     // Cotxe a seguir
     private Transform target = null;
 
@@ -22,22 +25,22 @@ public class CameraFollow : MonoBehaviour
             HandleRotation();
         } else {
             transform.position = new Vector3(0, 200, 0);
-            transform.rotation = Quaternion.LookRotation(-transform.position,Vector3.up);
+            transform.rotation = Quaternion.LookRotation(-transform.position , Vector3.up);
         }
     }
 
     // Es mou a la direcció del cotxe
     private void HandleTranslation()
     {
-        Vector3 targetPosition = target.TransformPoint(offset);
-        transform.position = Vector3.Lerp(transform.position, targetPosition, translateSpeed * Time.deltaTime);
+        Vector3 targetPosition = target.TransformPoint(offset) ;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, translateSpeed * Time.deltaTime) + Vector3.up * varProva;
     }
 
     // Rota per estar en direcció del cotxe
     private void HandleRotation()
     {
         Vector3 direction = target.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+        Quaternion rotation = Quaternion.LookRotation(direction + Vector3.up * varProva2, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
 
