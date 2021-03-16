@@ -95,6 +95,8 @@ public class GameManager : MonoBehaviour
     public void StartRound()
     {
         //Iniciar tots el jugadors
+        UIManager.Instance.ChangeRound(round);
+
         StartCoroutine(StartCars());
         
     }
@@ -145,72 +147,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddRoundTime(GameObject gameObject, float timer)
-    {
-        Debug.Log(gameObject.name);
-        if (round == 0)
-        {
-            if (gameObject.name == "Player")
-            {
-                times[0] = timer;
-                return;
-            } else if (gameObject.name == "Player2")
-            {
-                times[1] = timer;
-            }
-        }
-        else if (round == 1)
-	    {
-            if (gameObject.name == "Player")
-            {
-                times[2] = timer;
-                return;
-            }
-            else if (gameObject.name == "Player2")
-            {
-                times[3] = timer;
-            }
-            else if (gameObject.name == "Phantom Player - 0")
-            {
-                times[4] = timer;
-                return;
-            }
-            else if (gameObject.name == "Phantom Player2 - 0")
-            {
-                times[5] = timer;
-            }
-        }
-        else if (round == 2)
-        {
-            if (gameObject.name == "Player")
-            {
-                times[6] = timer;
-                return;
-            }
-            else if (gameObject.name == "Player2")
-            {
-                times[7] = timer;
-            }
-            else if (gameObject.name == "Phantom Player - 0")
-            {
-                times[8] = timer;
-                return;
-            }
-            else if (gameObject.name == "Phantom Player2 - 0")
-            {
-                times[9] = timer;
-            }
-            else if (gameObject.name == "Phantom Player - 1")
-            {
-                times[10] = timer;
-                return;
-            }
-            else if (gameObject.name == "Phantom Player2 - 1")
-            {
-                times[11] = timer;
-            }
-        }
-    } 
+    //------------------------------DEBUG-----------------------------------------------
 
     float deltaTime = 0.0f;
  

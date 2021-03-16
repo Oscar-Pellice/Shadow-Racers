@@ -20,7 +20,6 @@ public class FinishLineTrigger : MonoBehaviour
             if (controller.checkPointIndex == checkpointMax)
             {
                 controller.checkPointIndex = 0;
-                gameManager.AddRoundTime(other.transform.parent.parent.gameObject, UIManager.Instance.timer);
                 if (gameManager.roundFlag == 0)
                 {
                     gameManager.FinishRound();

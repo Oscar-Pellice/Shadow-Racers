@@ -3,30 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public TMP_Text text;
     public int playing;
     public float timer;
     private GameManager gameManager;
 
     public bool tab = false;
-    [SerializeField] private GameObject tabContainer;
-    [SerializeField] private TMP_Text playerName;
-    [SerializeField] private TMP_Text Time1_1_1;
-    [SerializeField] private TMP_Text Time1_2_1;
-    [SerializeField] private TMP_Text Time1_2_2;
-    [SerializeField] private TMP_Text Time1_3_1;
-    [SerializeField] private TMP_Text Time1_3_2;
-    [SerializeField] private TMP_Text Time1_3_3;
-    [SerializeField] private TMP_Text playerName2;
-    [SerializeField] private TMP_Text Time2_1_1;
-    [SerializeField] private TMP_Text Time2_2_1;
-    [SerializeField] private TMP_Text Time2_2_2;
-    [SerializeField] private TMP_Text Time2_3_1;
-    [SerializeField] private TMP_Text Time2_3_2;
-    [SerializeField] private TMP_Text Time2_3_3;
+    [SerializeField] private TMP_Text round_text;
+    [SerializeField] private TMP_Text time_text;
+    [SerializeField] private TMP_Text best_text;
+
+
+    [SerializeField] private GameObject position_sprite;
+    [SerializeField] private List<Sprite> list_position_sprite;
+
 
     public static UIManager Instance;
 
@@ -55,33 +48,8 @@ public class UIManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(timer / 60f);
         int seconds = Mathf.FloorToInt(timer % 60f);
         int milliseconds = Mathf.FloorToInt((timer * 100f) % 100f);
-        text.text = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
-        
-        if (tab)
-        {
-            showTab();
-        } else
-        {
-            tabContainer.SetActive(false);
-        }
-    }
+        time_text.text = minutes.ToString("00") + ":" + seconds.ToString("00") + ":" + milliseconds.ToString("00");
 
-    private void showTab()
-    {
-        float[] infoTimes = (float[])GameManager.Instance.times.Clone();
-        setTime(Time1_1_1, infoTimes[0]);
-        setTime(Time1_2_1, infoTimes[2]);
-        setTime(Time1_2_2, infoTimes[4]);
-        setTime(Time1_3_1, infoTimes[6]);
-        setTime(Time1_3_2, infoTimes[8]);
-        setTime(Time1_3_3, infoTimes[10]);
-        setTime(Time2_1_1, infoTimes[1]);
-        setTime(Time2_2_1, infoTimes[3]);
-        setTime(Time2_2_2, infoTimes[5]);
-        setTime(Time2_3_1, infoTimes[7]);
-        setTime(Time2_3_2, infoTimes[9]);
-        setTime(Time2_3_3, infoTimes[11]);
-        tabContainer.SetActive(true);
     }
 
     private void setTime(TMP_Text text, float time)
@@ -97,6 +65,16 @@ public class UIManager : MonoBehaviour
         {
             text.text = "Not Set";
         }
+    }
+
+    public void ChangeRound(int round)
+    {
+        round_text.text = round.ToString() + " / 3";
+    }
+
+    public void ChangePosition(int pos)
+    {
+        position_sprite.GetComponent<Image>().sprite = list_position_sprite[pos];
     }
 
     public void StartRoundUI()
