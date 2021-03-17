@@ -48,8 +48,11 @@ public class PlayerController : MonoBehaviour
 
     private int status = 0;
 
+    private Queue<PowerUp> powerUp;
+
     private void Awake()
     {
+        powerUp = new Queue<PowerUp>();
         PV = GetComponent<PhotonView>();
         gameManager = FindObjectOfType<GameManager>();
         raceInfo = SaveInfo.Instance.ReturnJson();
@@ -115,6 +118,12 @@ public class PlayerController : MonoBehaviour
         } 
         isBreaking = Input.GetKey(KeyCode.Space);
         isTabing = Input.GetKey(KeyCode.Tab);
+        if (Input.GetKeyDown(KeyCode.Space) && this.powerUp.Count != 0)
+        {
+            //powerUp activate
+            powerUp.Peek().StartPoweUp();
+            powerUp.Dequeue();
+        }
     }
 
     private void FixedUpdate()
@@ -166,7 +175,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Apliquem força de motor
-    private void HandleMotor(float multiply)
+    public void HandleMotor(float multiply)
     {
         rearLeftWheelCollider.motorTorque = motorForce * multiply;
         rearRightWheelCollider.motorTorque = motorForce * multiply; 
@@ -199,5 +208,29 @@ public class PlayerController : MonoBehaviour
         wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    public void addPowerUp(PowerUp power)
+    {
+        Debug.Log("PowerUp From Controller Name: " + power.Name + " duration: " + power.duration + "s");
+        if(powerUp.Count < 3)
+        {
+            powerUp.Enqueue(power);
+        }
+    }
+    public Vector3 getPosition()
+    {
+        return rb.position;
+    }
+    public void changeScale(Vector3 scale)
+    {
+        Vector3 pos = this.transform.localPosition;
+        pos.y += 6f;
+        this.transform.localPosition = pos;
+        this.transform.localScale = scale;
+    }
+    public void jump(float hight)
+    {
+        rb.velocity += hight * Vector3.up;
     }
 }
