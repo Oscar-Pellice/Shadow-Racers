@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> phantomCars = new List<GameObject>();
 
-    private GameObject playerGameObject = null;
+    public GameObject playerGameObject = null;
 
     private int round = 0;
     public int roundFlag = 0;

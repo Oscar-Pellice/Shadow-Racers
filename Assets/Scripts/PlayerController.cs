@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     private bool ableAutomatic = true;
 
     private PhotonView PV;
-    private GameManager gameManager;
 
     private List<PathReader.Moment> raceInfo;
     private int nextNode = 0;
@@ -48,16 +47,18 @@ public class PlayerController : MonoBehaviour
 
     private int status = 0;
 
+    public AudioSource audioSource;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
-        gameManager = FindObjectOfType<GameManager>();
         raceInfo = SaveInfo.Instance.ReturnJson();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         if (!PV.IsMine)
         {
             Destroy(this.transform.Find("Camera").gameObject);
@@ -102,6 +103,8 @@ public class PlayerController : MonoBehaviour
                 nextNode = (nextNode + 1) % raceInfo.Count;
             }
         }
+        EngineSound();
+        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
     }
 
     // Detectem inputs del teclat
@@ -199,5 +202,15 @@ public class PlayerController : MonoBehaviour
         wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+    
+    private void EngineSound()
+    {
+        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
+        audioSource.pitch = ((GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude*3)/50);
+        Debug.Log(audioSource.pitch);
+        
+
+
     }
 }
