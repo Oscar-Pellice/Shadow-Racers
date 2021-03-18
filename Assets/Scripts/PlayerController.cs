@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isMovable = false;
 
+    public AudioSource audioSource;
+
     private Queue<PowerUp> powerUp;
 
     private void Awake()
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         if (!PV.IsMine)
         {
             Destroy(this.transform.Find("Camera").gameObject);
@@ -107,6 +110,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        EngineSound();
+        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
     }
 
     // Detectem inputs del teclat
@@ -250,4 +255,10 @@ public class PlayerController : MonoBehaviour
         tActual = Time.time;
     }
 
+    private void EngineSound()
+    {
+        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
+        audioSource.pitch = ((GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude * 3) / 50);
+        Debug.Log(audioSource.pitch);
+    }
 }
