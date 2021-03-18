@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour
                     //tResta = tActual - raceInfo[nextNode].time;
                     targetToGet = raceInfo[nextNode].position;
                     nextNode = (nextNode + 1) % raceInfo.Count;
+                    MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
                 }
             }
         }
