@@ -38,6 +38,8 @@ public class IA_Car : MonoBehaviour
 
     LineRenderer lineRenderer;
 
+    private bool isMovable = false;
+
 
     public void AssignRace(List<PathReader.Moment> race)
     {
@@ -76,13 +78,16 @@ public class IA_Car : MonoBehaviour
     {
         if (raceInfo == null) return;
 
-        // Busquem al seguent node
-        tActual = Time.time - tResta;
-        if ( tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+        if (isMovable)
         {
-            //tResta = tActual - raceInfo[nextNode].time;
-            targetToGet = raceInfo[nextNode].position;
-            nextNode = (nextNode+1) % raceInfo.Count;
+            // Busquem al seguent node
+            tActual = Time.time - tResta;
+            if ( tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+            {
+                //tResta = tActual - raceInfo[nextNode].time;
+                targetToGet = raceInfo[nextNode].position;
+                nextNode = (nextNode+1) % raceInfo.Count;
+            }
         }
     }
 
@@ -90,9 +95,12 @@ public class IA_Car : MonoBehaviour
     {
         if (raceInfo == null) return;
 
-        HandleVelocity();
-        HandleSteering(CalculateAngle());
-        UpdateWheels();
+        if (isMovable)
+        {
+            HandleVelocity();
+            HandleSteering(CalculateAngle());
+            UpdateWheels();
+        }
     }
 
     // Calcula el angle entre el cotxe i el node
@@ -153,5 +161,10 @@ public class IA_Car : MonoBehaviour
         wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    public void SetMovement(bool valor)
+    {
+        isMovable = valor;
     }
 }
