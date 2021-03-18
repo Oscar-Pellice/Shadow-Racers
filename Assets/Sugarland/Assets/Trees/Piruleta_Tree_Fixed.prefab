@@ -29,6 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7240450354885241592}
+  - {fileID: 365063893071682155}
   - {fileID: 3017035415735442707}
   - {fileID: 8941277591694939581}
   m_Father: {fileID: 0}
@@ -48,22 +49,104 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.29760554
-    fadeTransitionWidth: 1
+  - screenRelativeHeight: 0.876361
+    fadeTransitionWidth: 0.188
     renderers:
     - renderer: {fileID: 8372213563646202263}
-  - screenRelativeHeight: 0.19491509
-    fadeTransitionWidth: 1
+  - screenRelativeHeight: 0.7525523
+    fadeTransitionWidth: 0.291
+    renderers:
+    - renderer: {fileID: 1539064978718597380}
+  - screenRelativeHeight: 0.19978234
+    fadeTransitionWidth: 0.22
     renderers:
     - renderer: {fileID: 4149369302303172220}
-  - screenRelativeHeight: 0.07390304
-    fadeTransitionWidth: 1
+  - screenRelativeHeight: 0.070695184
+    fadeTransitionWidth: 0.713
     renderers:
     - renderer: {fileID: 7808925388435680978}
-  - screenRelativeHeight: 0
-    fadeTransitionWidth: 0
-    renderers: []
   m_Enabled: 1
+--- !u!1001 &187548991031262592
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2053695678608636672}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 246ce48645af1c945a4b45ec631119b0,
+        type: 3}
+      propertyPath: m_Name
+      value: Piruleta HP 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 246ce48645af1c945a4b45ec631119b0, type: 3}
+--- !u!4 &365063893071682155 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 246ce48645af1c945a4b45ec631119b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 187548991031262592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1539064978718597380 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 246ce48645af1c945a4b45ec631119b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 187548991031262592}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3338311660926565112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109,7 +192,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2147865a4f984b54099ef7a9cabe0ff7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2147865a4f984b54099ef7a9cabe0ff7,
         type: 3}
@@ -235,7 +318,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8d0b3dcdba1f8714d98e3e8d3a138c9b,
         type: 3}
       propertyPath: m_Name
-      value: Piruleta HP
+      value: Piruleta HP 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8d0b3dcdba1f8714d98e3e8d3a138c9b,
         type: 3}
@@ -301,7 +384,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5820b4196914df14eae34aef781af9bb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5820b4196914df14eae34aef781af9bb,
         type: 3}
