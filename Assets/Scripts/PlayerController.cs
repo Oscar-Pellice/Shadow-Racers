@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine)
         {
             Destroy(this.transform.Find("Camera").gameObject);
-            Destroy(this.transform.Find("Minimap").gameObject);
+            //Destroy(this.transform.Find("Minimap").gameObject);
         }
 
         // Resituem el centre de massa
