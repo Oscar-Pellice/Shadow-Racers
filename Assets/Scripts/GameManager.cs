@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private PathReader pathReader;
     public static GameManager Instance;
 
+    public Camera mainCamera;
+
     public struct Player
     {
         public int player_id;
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
     private int round = 0;
     public int roundFlag = 0;
     private const int MaxRounds = 3;
-    private Vector3[] startingPosition = { new Vector3(20, 200, -370), new Vector3(28, 200, -370), new Vector3(20, 200, -380), new Vector3(28, 200, -380), new Vector3(20, 200, -390), new Vector3(28, 200, -390) };
+    private Vector3[] startingPosition = { new Vector3(20, 199, -370), new Vector3(28, 199, -370), new Vector3(20, 199, -380), new Vector3(28, 199, -380), new Vector3(20, 199, -390), new Vector3(28, 199, -390) };
 
     private void Awake()
     {
@@ -67,7 +69,7 @@ public class GameManager : MonoBehaviour
         // Serveix per crear i inicialitzar el jugador
         player = new Player(id);
 
-        StartPlayer();
+        StartRound();
     }
 
     private void StartPlayer()
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour
         }
 
         pathReader.AddRoundPlayer(playerGameObject);
+        pathReader.ActivateReader(false);
 
         //Creem i setejem la camera
         GameObject camera = playerGameObject.transform.Find("Camera").gameObject;
@@ -98,12 +101,15 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ChangeRound(round);
 
         StartCoroutine(StartCars());
-        
     }
 
     // Serveix per iniciar els phantoms al començament de la ronda
     IEnumerator StartCars()
     {
+        StartPlayer();
+        ChangeCamara(false);
+        playerGameObject.GetComponent<PlayerController>().SetMovement(false);
+
         GameObject phantom;
         string prefabName = "Phantom Player2";
         if (player.player_id == 0)
@@ -117,12 +123,32 @@ public class GameManager : MonoBehaviour
             phantom.name = prefabName + " - " + r.ToString();
             phantomCars.Add(phantom);
             phantom.GetComponent<IA_Car>().AssignRace(pathReader.getRace(r));
+            phantomCars[r].GetComponent<IA_Car>().SetMovement(false);
             yield return new WaitForSecondsRealtime(1);
         }
 
-        StartPlayer();
+        //semafor
+        UIManager.Instance.SemSetActive(true);
+        UIManager.Instance.setSemafor(0);
+        yield return new WaitForSecondsRealtime(1);
+        UIManager.Instance.setSemafor(1);
+        yield return new WaitForSecondsRealtime(1);
+        UIManager.Instance.setSemafor(2);
+
+
+        for (int r = 0; r < round; r++)
+        {
+            phantomCars[r].GetComponent<IA_Car>().SetMovement(true);
+        }
+        playerGameObject.GetComponent<PlayerController>().SetMovement(true);
+        pathReader.ActivateReader(true);
+        playerGameObject.GetComponent<PlayerController>().ResetTimer();
         UIManager.Instance.StartRoundUI();
         roundFlag = 0;
+
+
+        yield return new WaitForSecondsRealtime(2);
+        UIManager.Instance.SemSetActive(false);
     }
 
     public void FinishRound()
@@ -132,12 +158,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(EndRound());
     }
 
+    public void ChangeCamara(bool principal)
+    {
+        mainCamera.enabled = principal;
+    }
+
     IEnumerator EndRound()
     {
         roundFlag = 1;
         round++;
         yield return new WaitForSecondsRealtime(2);
         foreach (GameObject obj in phantomCars) Destroy(obj);
+        phantomCars = new List<GameObject>();
         if (round < MaxRounds)
         {
             StartRound();

@@ -20,6 +20,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject position_sprite;
     [SerializeField] private List<Sprite> list_position_sprite;
 
+    [SerializeField] private GameObject semafor_struct;
+    [SerializeField] private List<GameObject> semafor_state;
+    [SerializeField] private List<Sprite> list_sem_sprite;
+
 
     public static UIManager Instance;
 
@@ -67,9 +71,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void setSemafor(int valor)
+    {
+        foreach (GameObject circle in semafor_state)
+        {
+            circle.GetComponent<Image>().sprite = list_sem_sprite[valor];
+        }
+    }
+
+    public void SemSetActive(bool state)
+    {
+        semafor_struct.SetActive(state);
+    }
+
     public void ChangeRound(int round)
     {
-        round_text.text = round.ToString() + " / 3";
+        round_text.text = (round+1).ToString() + " / 3";
     }
 
     public void ChangePosition(int pos)

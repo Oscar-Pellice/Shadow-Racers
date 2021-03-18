@@ -32,7 +32,7 @@ public class SaveInfo : MonoBehaviour
         }
 
         var race = JsonUtility.ToJson(infoGuardada);
-        System.IO.File.WriteAllText(Application.dataPath + "/StreamingAssets" + "RaceData.json", race);
+        System.IO.File.WriteAllText(Application.dataPath + "/StreamingAssets" + "/RaceData.json", race);
     }
 
     public List<PathReader.Moment> ReturnJson()

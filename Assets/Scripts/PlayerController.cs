@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     private float currentSteerAngle;
     private float currentbreakForce;
     private bool isBreaking;
-    private bool isTabing;
 
     // Inputs
     private float horizontalInput;
@@ -35,7 +34,6 @@ public class PlayerController : MonoBehaviour
     private bool ableAutomatic = true;
 
     private PhotonView PV;
-    private GameManager gameManager;
 
     private List<PathReader.Moment> raceInfo;
     private int nextNode = 0;
@@ -43,15 +41,14 @@ public class PlayerController : MonoBehaviour
     private float tResta = 0;
     private float tActual = 0;
     private const float DistMin = 5f;
-    private LineRenderer lineRenderer;
+    //private LineRenderer lineRenderer;
     private Transform car_transform;
 
-    private int status = 0;
+    private bool isMovable = false;
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
-        gameManager = FindObjectOfType<GameManager>();
         raceInfo = SaveInfo.Instance.ReturnJson();
     }
 
@@ -61,26 +58,26 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine)
         {
             Destroy(this.transform.Find("Camera").gameObject);
-            //Destroy(this.transform.Find("Minimap").gameObject);
+            Destroy(this.transform.Find("Minimap").gameObject);
         }
 
         // Resituem el centre de massa
         rb.centerOfMass = new Vector3 (0,-0.25f,0f); // Movem el centre de massa per que no giri
 
-        //For creating line renderer object
-        lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
-        lineRenderer.startColor = Color.black;
-        lineRenderer.endColor = Color.black;
-        lineRenderer.startWidth = 0.01f;
-        lineRenderer.endWidth = 0.01f;
-        lineRenderer.positionCount = raceInfo.Count;
-        lineRenderer.useWorldSpace = true;
+        ////For creating line renderer object
+        //lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
+        //lineRenderer.startColor = Color.red;
+        //lineRenderer.endColor = Color.red;
+        //lineRenderer.startWidth = 0.01f;
+        //lineRenderer.endWidth = 0.01f;
+        //lineRenderer.positionCount = raceInfo.Count;
+        //lineRenderer.useWorldSpace = true;
 
-        //For drawing line in the world space, provide the x,y,z values
-        for (int i = 0; i < raceInfo.Count; i++)
-        {
-            lineRenderer.SetPosition(i, new Vector3(raceInfo[i].position.x, 1, raceInfo[i].position.z)); //x,y and z position of the starting point of the line
-        }
+        ////For drawing line in the world space, provide the x,y,z values
+        //for (int i = 0; i < raceInfo.Count; i++)
+        //{
+        //    lineRenderer.SetPosition(i, new Vector3(raceInfo[i].position.x, 1, raceInfo[i].position.z)); //x,y and z position of the starting point of the line
+        //}
 
         car_transform = transform.GetChild(0);
     }
@@ -91,15 +88,18 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine) return;
         GetInput();
 
-        if (ableAutomatic == true)
+        if (isMovable)
         {
-            // Busquem al seguent node
-            tActual = Time.time - tResta;
-            if (tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+            if (ableAutomatic == true)
             {
-                //tResta = tActual - raceInfo[nextNode].time;
-                targetToGet = raceInfo[nextNode].position;
-                nextNode = (nextNode + 1) % raceInfo.Count;
+                // Busquem al seguent node
+                tActual = Time.time - tResta;
+                if (tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+                {
+                    //tResta = tActual - raceInfo[nextNode].time;
+                    targetToGet = raceInfo[nextNode].position;
+                    nextNode = (nextNode + 1) % raceInfo.Count;
+                }
             }
         }
     }
@@ -114,27 +114,27 @@ public class PlayerController : MonoBehaviour
             ableAutomatic = !ableAutomatic;
         } 
         isBreaking = Input.GetKey(KeyCode.Space);
-        isTabing = Input.GetKey(KeyCode.Tab);
     }
 
     private void FixedUpdate()
     {
         if (!PV.IsMine) return;
-        if (UIManager.Instance.tab && !isTabing) UIManager.Instance.tab = false;
-        if (!UIManager.Instance.tab && isTabing) UIManager.Instance.tab = true;
 
-        if (ableAutomatic == false)
+        if (isMovable)
         {
-            HandleMotor(verticalInput);
-            HandleSteering(horizontalInput);
-            UpdateWheels();
-        } else
-        {
-            HandleVelocity();
-            HandleSteering(CalculateAngle());
-            UpdateWheels();
+            if (ableAutomatic == false)
+            {
+                HandleMotor(verticalInput);
+                HandleSteering(horizontalInput);
+                UpdateWheels();
+            }
+            else
+            {
+                HandleVelocity();
+                HandleSteering(CalculateAngle());
+                UpdateWheels();
+            }
         }
-        
     }
 
     // Calcula el angle entre el cotxe i el node
@@ -172,8 +172,8 @@ public class PlayerController : MonoBehaviour
         rearRightWheelCollider.motorTorque = motorForce * multiply; 
         frontLeftWheelCollider.motorTorque = motorForce * multiply;
         frontRightWheelCollider.motorTorque = motorForce * multiply;
-
-        currentbreakForce = isBreaking ? breakForce : 0f;
+        
+        currentbreakForce = isBreaking ? breakForce * 100 : 0f;
         rearLeftWheelCollider.brakeTorque = currentbreakForce;
         rearRightWheelCollider.brakeTorque = currentbreakForce;
     }
@@ -200,4 +200,16 @@ public class PlayerController : MonoBehaviour
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
+
+    public void SetMovement(bool valor)
+    {
+        isMovable = valor;
+
+    }
+
+    public void ResetTimer()
+    {
+        tActual = Time.time;
+    }
+
 }
