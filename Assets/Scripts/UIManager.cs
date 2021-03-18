@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     private GameManager gameManager;
 
     public bool tab = false;
+    private int puCount;
     [SerializeField] private TMP_Text round_text;
     [SerializeField] private TMP_Text time_text;
     [SerializeField] private TMP_Text best_text;
@@ -23,6 +24,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject semafor_struct;
     [SerializeField] private List<GameObject> semafor_state;
     [SerializeField] private List<Sprite> list_sem_sprite;
+
+    [SerializeField] private GameObject pu_struct;
+    [SerializeField] private List<GameObject> pu_loc;
+    [SerializeField] private List<Sprite> list_pu_sprite;
 
 
     public static UIManager Instance;
@@ -41,6 +46,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        puCount = 0;
         gameManager = FindObjectOfType<GameManager>();
     }
 
@@ -79,9 +85,46 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void addPUToQueue(int spriteIndex)
+    {
+        if(puCount < 3)
+        {
+            pu_loc[puCount].SetActive(true);
+            pu_loc[puCount].GetComponent<Image>().sprite = list_pu_sprite[spriteIndex];
+            puCount++;
+        }
+        
+    }
+    public void advancePUQueue()
+    {
+        if (pu_loc[2].active)
+        {
+            pu_loc[1].GetComponent<Image>().sprite = pu_loc[2].GetComponent<Image>().sprite;
+            pu_loc[2].SetActive(false);
+        }else if (pu_loc[1].active)
+        {
+            pu_loc[0].GetComponent<Image>().sprite = pu_loc[1].GetComponent<Image>().sprite;
+            pu_loc[1].SetActive(false);
+        }
+        else
+        {
+            pu_loc[0].SetActive(false);
+        }
+        puCount--;
+    }
+
     public void SemSetActive(bool state)
     {
         semafor_struct.SetActive(state);
+        
+    }
+
+    public void PUSetActive(bool state)
+    {
+        pu_struct.SetActive(true);
+        pu_loc[0].SetActive(false);
+        pu_loc[1].SetActive(false);
+        pu_loc[2].SetActive(false);
     }
 
     public void ChangeRound(int round)

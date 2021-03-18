@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private float currentSteerAngle;
     private float currentbreakForce;
     private bool isBreaking;
+    private bool isTabing;
 
     // Inputs
     private float horizontalInput;
@@ -123,6 +124,7 @@ public class PlayerController : MonoBehaviour
             //powerUp activate
             powerUp.Peek().StartPoweUp();
             powerUp.Dequeue();
+            UIManager.Instance.advancePUQueue();
         }
     }
 
@@ -217,6 +219,8 @@ public class PlayerController : MonoBehaviour
         if(powerUp.Count < 3)
         {
             powerUp.Enqueue(power);
+            //ToDo: Que el sprite sea del powerUp added
+            UIManager.Instance.addPUToQueue(0);
         }
     }
     public Vector3 getPosition()

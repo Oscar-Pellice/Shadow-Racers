@@ -135,7 +135,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
         UIManager.Instance.setSemafor(2);
 
-
         for (int r = 0; r < round; r++)
         {
             phantomCars[r].GetComponent<IA_Car>().SetMovement(true);
@@ -149,6 +148,9 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(2);
         UIManager.Instance.SemSetActive(false);
+
+        //Powerups
+        UIManager.Instance.PUSetActive(true);
     }
 
     public void FinishRound()
