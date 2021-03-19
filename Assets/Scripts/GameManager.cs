@@ -214,11 +214,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(5);
         foreach (GameObject obj in phantomCars) Destroy(obj);
         phantomCars = new List<GameObject>();
+        Destroy(playerGameObject);
         if (round < MaxRounds)
         {
             StartRound();
         } else
         {
+            InfoSaver.Instance.BroadcastWinner(winnerString);
+            winnerString = InfoSaver.Instance.winnerString;
+
             winnerCanvas.gameObject.SetActive(true);
             if (winnerString == "Player" || winnerString == "Phantom Player - 1" || winnerString == "Phantom Player - 2")
             {

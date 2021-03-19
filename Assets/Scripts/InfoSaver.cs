@@ -13,6 +13,8 @@ public class InfoSaver : MonoBehaviour
 
     public int mapSelected = 0;
 
+    public string winnerString;
+
     public float volume = 0;
 
     private void Awake()
@@ -60,5 +62,21 @@ public class InfoSaver : MonoBehaviour
         CarSelected = car;
         mapSelected = map;
         SendInfoMulti();
+    }
+
+    public void BroadcastWinner(string winner)
+    {
+        winnerString = winner;
+
+        if (PV.IsMine)
+        {
+            PV.RPC("RPC_SendWinner", RpcTarget.AllBuffered, winner);
+        }
+    }
+
+    [PunRPC]
+    void RPC_SendWinner(string winner)
+    {
+        winnerString = winner;
     }
 }

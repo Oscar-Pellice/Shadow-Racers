@@ -129,11 +129,61 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3002673250235623330, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002673250235623330, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002673250235623330, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170491263113714893, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 54740390f3d9b0b44a82f1d05262ccc9, type: 2}
+    - target: {fileID: 4903559234241714988, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903559234241714988, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903559234241714988, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903559234241714988, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.0000001872535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903559234241714988, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5783310122629884252, guid: f707795a006b10949a9fb9781cc2d6fe,
         type: 3}
       propertyPath: m_Name
       value: JumperPU
       objectReference: {fileID: 0}
+    - target: {fileID: 6073066680157708355, guid: f707795a006b10949a9fb9781cc2d6fe,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 54740390f3d9b0b44a82f1d05262ccc9, type: 2}
     - target: {fileID: 6934106124676925318, guid: f707795a006b10949a9fb9781cc2d6fe,
         type: 3}
       propertyPath: m_Enabled
