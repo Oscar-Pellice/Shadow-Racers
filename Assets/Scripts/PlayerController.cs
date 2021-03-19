@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform frontLeftWheelTransform = null;
     [SerializeField] private Transform frontRightWheeTransform = null;
+
+    
+
     [SerializeField] private Transform rearLeftWheelTransform = null;
     [SerializeField] private Transform rearRightWheelTransform = null;
 
@@ -257,5 +260,10 @@ public class PlayerController : MonoBehaviour
     private void EngineSound()
     {
         audioSource.pitch = ((GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude * 3) / 50);
+    }
+
+    public void AddBoost(int v)
+    {
+        rb.AddForce(rb.transform.forward * v, ForceMode.Impulse);
     }
 }

@@ -27,13 +27,16 @@ public class Accelerator : PowerUp
     {
         if (activated)
         {
-            base.player.HandleMotor(4f);
-            base.duration -= Time.deltaTime;
-            if (base.duration <= 0.0f)
-            {
-                activated = false;
-                End();
-            }
+            base.player.AddBoost(10000);
+            activated = false;
+            //base.player.HandleMotor(4f);
+            //base.duration -= Time.deltaTime;
+            //if (base.duration <= 0.0f)
+            //{
+            //    activated = false;
+            //    End();
+            //}
+
         }
     }
     
