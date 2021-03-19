@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     // Inputs
     private float horizontalInput;
     private float verticalInput;
-    private bool ableAutomatic = true;
+    private bool ableAutomatic = false;
 
     private PhotonView PV;
 

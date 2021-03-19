@@ -36,15 +36,15 @@ public class InfoSaver : MonoBehaviour
             if (PhotonNetwork.IsMasterClient)
             {
                 PV.RPC("RPC_SendMap", RpcTarget.AllBuffered, mapSelected);
+                PV.RPC("RPC_SendCar", RpcTarget.AllBuffered, CarSelected);
             }
-            PV.RPC("RPC_SendCar", RpcTarget.AllBuffered, CarSelected);
         }
     }
 
     [PunRPC]
     void RPC_SendCar(int car)
     {
-        EnemyCarSelected = car;
+        CarSelected = car;
     }
 
     [PunRPC]

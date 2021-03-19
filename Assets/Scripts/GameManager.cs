@@ -98,14 +98,29 @@ public class GameManager : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), startingPosition[InfoSaver.Instance.mapSelected,round * 2 + player.player_id], Quaternion.identity);
+            if (InfoSaver.Instance.CarSelected == 0)
+            {
+                playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), startingPosition[InfoSaver.Instance.mapSelected, round * 2 + player.player_id], Quaternion.identity);
+            }
+            else
+            {
+                playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player2"), startingPosition[InfoSaver.Instance.mapSelected, round * 2 + player.player_id], Quaternion.identity);
+            }
+            
             playerGameObject.name = "Player";
             //playerGameObject.transform.Find("Car/Body").GetComponent<MeshRenderer>().materials[0] = car_list[InfoSaver.Instance.CarSelected];
             //Debug.Log("Change:" + playerGameObject.transform.Find("Car/Body").GetComponent<MeshRenderer>().materials[0].ToString() + "--->" + car_list[InfoSaver.Instance.CarSelected].ToString());
         }
         else
         {
-            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player2"), startingPosition[InfoSaver.Instance.mapSelected,round * 2 + player.player_id], Quaternion.identity);
+            if (InfoSaver.Instance.CarSelected == 0)
+            {
+                playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player2"), startingPosition[InfoSaver.Instance.mapSelected, round * 2 + player.player_id], Quaternion.identity);
+            }
+            else
+            {
+                playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), startingPosition[InfoSaver.Instance.mapSelected, round * 2 + player.player_id], Quaternion.identity);
+            }
             playerGameObject.name = "Player2";
             //playerGameObject.transform.Find("Car").transform.Find("Body").GetComponent<MeshRenderer>().materials[0] = car_list[InfoSaver.Instance.CarSelected];
         }
@@ -135,7 +150,7 @@ public class GameManager : MonoBehaviour
 
         GameObject phantom;
         string prefabName = "Phantom Player2";
-        if (player.player_id == 0)
+        if (player.player_id == 0 && InfoSaver.Instance.CarSelected == 0 || player.player_id == 1 && InfoSaver.Instance.CarSelected == 1)
         {
             prefabName = "Phantom Player";
         }
@@ -192,7 +207,7 @@ public class GameManager : MonoBehaviour
     {
         roundFlag = 1;
         round++;
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(5);
         foreach (GameObject obj in phantomCars) Destroy(obj);
         phantomCars = new List<GameObject>();
         if (round < MaxRounds)
