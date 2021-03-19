@@ -3376,11 +3376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   car_list:
   - {fileID: 21300000, guid: 6a699a58947b3754c836e8684b489208, type: 3}
-  - {fileID: 21300000, guid: 9baf6a8c9c4695741b475a0347cdf2c1, type: 3}
-  - {fileID: 21300000, guid: ba114091d10f24345a12e529740aec8a, type: 3}
   - {fileID: 21300000, guid: ec879b74aba71e04785cf373b7850044, type: 3}
-  - {fileID: 21300000, guid: e26b56fbe3844a343a46488603aef203, type: 3}
-  - {fileID: 21300000, guid: 630dbd56a330b4f4aa0870198e671a7d, type: 3}
   counter: 0
   image_car: {fileID: 7798921696697952514}
 --- !u!1 &7798921695250213840
