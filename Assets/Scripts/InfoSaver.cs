@@ -39,8 +39,8 @@ public class InfoSaver : MonoBehaviour
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PV.RPC("RPC_SendMap", RpcTarget.AllBuffered, mapSelected);
-                PV.RPC("RPC_SendCar", RpcTarget.AllBuffered, CarSelected);
+                PV.RPC("RPC_SendMap", RpcTarget.OthersBuffered, mapSelected);
+                PV.RPC("RPC_SendCar", RpcTarget.OthersBuffered, CarSelected);
             }
         }
     }
@@ -70,7 +70,7 @@ public class InfoSaver : MonoBehaviour
 
         if (PV.IsMine)
         {
-            PV.RPC("RPC_SendWinner", RpcTarget.AllBuffered, winner);
+            PV.RPC("RPC_SendWinner", RpcTarget.OthersBuffered, winner);
         }
     }
 

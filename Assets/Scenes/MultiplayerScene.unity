@@ -569,6 +569,7 @@ MonoBehaviour:
   CarSelected: 0
   EnemyCarSelected: 0
   mapSelected: 0
+  winnerString: 
   volume: 0
 --- !u!4 &1001037257
 Transform:
@@ -846,7 +847,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents: []
-  viewIdField: 999
+  viewIdField: 998
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1531339305

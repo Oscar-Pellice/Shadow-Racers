@@ -80,19 +80,16 @@ public class IA_Car : MonoBehaviour
 
         if (isMovable)
         {
-            while (nextNode <= raceInfo.Count)
+            if (nextNode >= raceInfo.Count) return;
+            // Busquem al seguent node
+            tActual = Time.time - tResta;
+            if ( tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
             {
-                // Busquem al seguent node
-                tActual = Time.time - tResta;
-                if ( tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
-                {
-                    //tResta = tActual - raceInfo[nextNode].time;
-                    targetToGet = raceInfo[nextNode].position;
-                    nextNode = (nextNode+1) % raceInfo.Count;
-                    //MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
-                }
+                //tResta = tActual - raceInfo[nextNode].time;
+                targetToGet = raceInfo[nextNode].position;
+                nextNode = (nextNode+1) % raceInfo.Count;
+                //MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
             }
-            
         }
     }
 

@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour
 
     public void PUSetActive(bool state)
     {
-        pu_struct.SetActive(true);
+        pu_struct.SetActive(state);
         pu_loc[0].SetActive(false);
         pu_loc[1].SetActive(false);
         pu_loc[2].SetActive(false);

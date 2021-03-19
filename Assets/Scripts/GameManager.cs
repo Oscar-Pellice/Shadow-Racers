@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public Camera mainCamera;
 
+    private PhotonView PV;
+
     public struct Player
     {
         public int player_id;
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioMixer.SetFloat("volume", InfoSaver.Instance.volume);
+        PV = GetComponent<PhotonView>();
 
         if (InfoSaver.Instance.mapSelected == 0)
         {
@@ -198,13 +201,24 @@ public class GameManager : MonoBehaviour
     public void FinishRound()
     {
         //SaveInfo.Instance.SaveIntoJson(pathReader.getRace(0));
-
+        if (PV.IsMine)
+        {
+            PV.RPC("RPC_EndRound", RpcTarget.OthersBuffered);
+        }
         StartCoroutine(EndRound());
     }
 
     public void ChangeCamara(bool principal)
     {
         mainCamera.enabled = principal;
+    }
+
+    [PunRPC]
+    void RPC_EndRound()
+    {
+        foreach (GameObject obj in phantomCars) Destroy(obj);
+        phantomCars = new List<GameObject>();
+        Destroy(playerGameObject);
     }
 
     IEnumerator EndRound()
@@ -215,6 +229,8 @@ public class GameManager : MonoBehaviour
         foreach (GameObject obj in phantomCars) Destroy(obj);
         phantomCars = new List<GameObject>();
         Destroy(playerGameObject);
+        UIManager.Instance.PUSetActive(false);
+
         if (round < MaxRounds)
         {
             StartRound();
@@ -245,8 +261,8 @@ public class GameManager : MonoBehaviour
     //------------------------------DEBUG-----------------------------------------------
 
     float deltaTime = 0.0f;
- 
-	void Update()
+
+    void Update()
 	{
 		deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 	}
