@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text winner_text;
     public string winnerString;
 
+    public AudioMixer audioMixer;
+
     private void Awake()
     {
         if (Instance)
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioMixer.SetFloat("volume", InfoSaver.Instance.volume);
+
         if (InfoSaver.Instance.mapSelected == 0)
         {
             map_list[1].SetActive(false);

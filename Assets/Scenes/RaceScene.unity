@@ -287,7 +287,8 @@ AudioSource:
   m_GameObject: {fileID: 67429683}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b1f6ad7f5beb2864dbe3b90f32e06c21,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: ea8de9aa73072fb4797ee25fef8b96bb, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -1942,6 +1943,7 @@ MonoBehaviour:
   canvas: {fileID: 1293203826}
   winner_text: {fileID: 1533822849}
   winnerString: 
+  audioMixer: {fileID: 24100000, guid: b1f6ad7f5beb2864dbe3b90f32e06c21, type: 2}
 --- !u!114 &892694304
 MonoBehaviour:
   m_ObjectHideFlags: 0

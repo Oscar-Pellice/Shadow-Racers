@@ -9,6 +9,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void setVolume (float volume)
     {
+        InfoSaver.Instance.volume = volume;
         audioMixer.SetFloat ("volume", volume);
     }
 

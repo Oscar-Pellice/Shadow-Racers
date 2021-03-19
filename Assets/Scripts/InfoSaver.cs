@@ -13,6 +13,8 @@ public class InfoSaver : MonoBehaviour
 
     public int mapSelected = 0;
 
+    public float volume = 0;
+
     private void Awake()
     {
         if (Instance)

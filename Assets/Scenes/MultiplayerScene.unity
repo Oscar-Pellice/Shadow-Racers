@@ -5408,6 +5408,8 @@ MonoBehaviour:
   playerListItemPrefab: {fileID: 7360220702620475627, guid: 597818dd9274d6942b8736a26d50abbf,
     type: 3}
   startGameButton: {fileID: 7798921696195796383}
+  carSelectGameButton: {fileID: 7798921694859943363}
+  mapSelectGameButton: {fileID: 7798921696676297377}
 --- !u!114 &7798921695605911636
 MonoBehaviour:
   m_ObjectHideFlags: 0
