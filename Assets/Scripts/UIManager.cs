@@ -15,8 +15,6 @@ public class UIManager : MonoBehaviour
     private int puCount;
     [SerializeField] private TMP_Text round_text;
     [SerializeField] private TMP_Text time_text;
-    [SerializeField] private TMP_Text best_text;
-
 
     [SerializeField] private GameObject position_sprite;
     [SerializeField] private List<Sprite> list_position_sprite;
