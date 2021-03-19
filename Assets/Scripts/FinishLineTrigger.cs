@@ -13,9 +13,12 @@ public class FinishLineTrigger : MonoBehaviour
             LapController controller = other.GetComponentInParent<LapController>();
             if (controller.checkPointIndex == checkpointMax)
             {
+                GameManager.Instance.winnerString = other.transform.parent.parent.name;
                 controller.checkPointIndex = 0;
                 Destroy(other.transform.parent.parent.gameObject);
                 GameManager.Instance.ChangeCamara(true);
+                
+
                 if (GameManager.Instance.roundFlag == 0)
                 {
                     GameManager.Instance.FinishRound();

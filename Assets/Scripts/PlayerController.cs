@@ -64,8 +64,8 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (!PV.IsMine)
         {
-            Destroy(this.transform.Find("Camera").gameObject);
-            //Destroy(this.transform.Find("Minimap").gameObject);
+            Destroy(GameObject.Find(this.name + "/Camera"));
+            Destroy(GameObject.Find(this.name + "/Car/Minimap"));
         }
 
         // Resituem el centre de massa
@@ -106,12 +106,11 @@ public class PlayerController : MonoBehaviour
                     //tResta = tActual - raceInfo[nextNode].time;
                     targetToGet = raceInfo[nextNode].position;
                     nextNode = (nextNode + 1) % raceInfo.Count;
-                    MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
+                    //MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
                 }
             }
         }
         EngineSound();
-        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
     }
 
     // Detectem inputs del teclat
@@ -257,8 +256,6 @@ public class PlayerController : MonoBehaviour
 
     private void EngineSound()
     {
-        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
         audioSource.pitch = ((GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude * 3) / 50);
-        Debug.Log(audioSource.pitch);
     }
 }

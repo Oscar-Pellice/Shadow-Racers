@@ -87,7 +87,7 @@ public class IA_Car : MonoBehaviour
                 //tResta = tActual - raceInfo[nextNode].time;
                 targetToGet = raceInfo[nextNode].position;
                 nextNode = (nextNode+1) % raceInfo.Count;
-                MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
+                //MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
             }
         }
     }

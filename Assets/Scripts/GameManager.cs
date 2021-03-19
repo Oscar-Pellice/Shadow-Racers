@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 
 
@@ -44,7 +45,16 @@ public class GameManager : MonoBehaviour
     private int round = 0;
     public int roundFlag = 0;
     private const int MaxRounds = 3;
-    private Vector3[] startingPosition = { new Vector3(20, 199, -370), new Vector3(28, 199, -370), new Vector3(20, 199, -380), new Vector3(28, 199, -380), new Vector3(20, 199, -390), new Vector3(28, 199, -390) };
+    private Vector3[,] startingPosition = { { new Vector3(20, 199, -370), new Vector3(28, 199, -370), new Vector3(20, 199, -380), new Vector3(28, 199, -380), new Vector3(20, 199, -390), new Vector3(28, 199, -390) },
+                                            { new Vector3(120, 0, 10), new Vector3(128, 0, 10), new Vector3(120, 0, 0), new Vector3(128, 0, 0), new Vector3(120, 0, -10), new Vector3(128, 0, -10) } };
+
+    public List<Material> car_list;
+    public List<GameObject> map_list;
+
+    public Canvas winnerCanvas;
+    public Canvas canvas;
+    public TMP_Text winner_text;
+    public string winnerString;
 
     private void Awake()
     {
@@ -60,6 +70,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (InfoSaver.Instance.mapSelected == 0)
+        {
+            map_list[1].SetActive(false);
+            map_list[0].SetActive(true);
+        }
+        else
+        {
+            map_list[0].SetActive(false);
+            map_list[1].SetActive(true);
+        }
         times = new float[12];
         pathReader = GetComponent<PathReader>();
     }
@@ -78,13 +98,16 @@ public class GameManager : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), startingPosition[round*2 + player.player_id], Quaternion.identity);
+            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), startingPosition[InfoSaver.Instance.mapSelected,round * 2 + player.player_id], Quaternion.identity);
             playerGameObject.name = "Player";
+            //playerGameObject.transform.Find("Car/Body").GetComponent<MeshRenderer>().materials[0] = car_list[InfoSaver.Instance.CarSelected];
+            //Debug.Log("Change:" + playerGameObject.transform.Find("Car/Body").GetComponent<MeshRenderer>().materials[0].ToString() + "--->" + car_list[InfoSaver.Instance.CarSelected].ToString());
         }
         else
         {
-            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player2"), startingPosition[round*2 + player.player_id], Quaternion.identity);
+            playerGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player2"), startingPosition[InfoSaver.Instance.mapSelected,round * 2 + player.player_id], Quaternion.identity);
             playerGameObject.name = "Player2";
+            //playerGameObject.transform.Find("Car").transform.Find("Body").GetComponent<MeshRenderer>().materials[0] = car_list[InfoSaver.Instance.CarSelected];
         }
 
         pathReader.AddRoundPlayer(playerGameObject);
@@ -119,7 +142,7 @@ public class GameManager : MonoBehaviour
 
         for (int r = 0; r < round; r++)
         {
-            phantom = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", prefabName), startingPosition[r*2 + player.player_id], Quaternion.identity);
+            phantom = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", prefabName), startingPosition[InfoSaver.Instance.mapSelected,r * 2 + player.player_id], Quaternion.identity);
             phantom.name = prefabName + " - " + r.ToString();
             phantomCars.Add(phantom);
             phantom.GetComponent<IA_Car>().AssignRace(pathReader.getRace(r));
@@ -177,8 +200,23 @@ public class GameManager : MonoBehaviour
             StartRound();
         } else
         {
-            //Acabar
+            winnerCanvas.gameObject.SetActive(true);
+            if (winnerString == "Player" || winnerString == "Phantom Player - 1" || winnerString == "Phantom Player - 2")
+            {
+                winner_text.text = "Winner\nPlayer 1";
+            }
+            else
+            {
+                winner_text.text = "Winner\nPlayer 2";
+            }
+            
+            canvas.gameObject.SetActive(false);
         }
+    }
+
+    public void GoBack()
+    {
+        PhotonNetwork.LoadLevel(0);
     }
 
     //------------------------------DEBUG-----------------------------------------------

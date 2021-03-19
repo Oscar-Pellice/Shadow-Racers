@@ -5,11 +5,22 @@ using UnityEngine.UI;
 
 public class CarSelection : MonoBehaviour
 {
+    public static CarSelection Instance;
+
     public List<Sprite> car_list;
     public int counter;
 
     public GameObject image_car;
 
+    private void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()

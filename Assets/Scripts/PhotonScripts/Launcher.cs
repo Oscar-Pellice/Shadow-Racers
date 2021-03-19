@@ -121,6 +121,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
     public void StartGame()
     {
+        int car = (CarSelection.Instance == null)? 0 : CarSelection.Instance.counter;
+        int map = (ScenarioSelection.Instance == null) ? 0 : ScenarioSelection.Instance.counter;
+
+        InfoSaver.Instance.SaveSelection(car, map);
         PhotonNetwork.LoadLevel(1);
     }
 
