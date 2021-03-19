@@ -6,6 +6,13 @@ using UnityEngine.Audio;
 public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
+    public AudioMixer soundMixer;
+
+    public void setSound (float sound)
+    {
+        Debug.Log(sound);
+        soundMixer.SetFloat("sound", sound);
+    }
 
     public void setVolume (float volume)
     {
