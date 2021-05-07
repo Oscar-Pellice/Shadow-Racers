@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class FinishLineTrigger : MonoBehaviour
 {
-    private GameManager gameManager;
     public int checkpointMax;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (gameManager == null)
-        {
-            gameManager = FindObjectOfType<GameManager>();
-        }
-
         if (other.GetComponentInParent<LapController>())
         {
             LapController controller = other.GetComponentInParent<LapController>();
             if (controller.checkPointIndex == checkpointMax)
             {
+                
                 controller.checkPointIndex = 0;
-                if (gameManager.roundFlag == 0)
+                Destroy(other.transform.parent.parent.gameObject);
+                GameManager.Instance.ChangeCamara(true);
+                
+
+                if (GameManager.Instance.roundFlag == 0)
                 {
-                    gameManager.FinishRound();
+                    GameManager.Instance.winnerString = other.transform.parent.parent.name;
+                    GameManager.Instance.FinishRound();
                 }
             } else
             {

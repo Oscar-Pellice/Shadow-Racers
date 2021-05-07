@@ -17,6 +17,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomListItemPrefab;
     [SerializeField] GameObject playerListItemPrefab;
     [SerializeField] GameObject startGameButton;
+    [SerializeField] GameObject carSelectGameButton;
+    [SerializeField] GameObject mapSelectGameButton;
 
     private void Awake()
     {
@@ -72,11 +74,15 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
 
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        carSelectGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        mapSelectGameButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        carSelectGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        mapSelectGameButton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -121,6 +127,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
     public void StartGame()
     {
+        int car = (CarSelection.Instance == null)? 0 : CarSelection.Instance.counter;
+        int map = (ScenarioSelection.Instance == null) ? 0 : ScenarioSelection.Instance.counter;
+
+        InfoSaver.Instance.SaveSelection(car, map);
         PhotonNetwork.LoadLevel(1);
     }
 

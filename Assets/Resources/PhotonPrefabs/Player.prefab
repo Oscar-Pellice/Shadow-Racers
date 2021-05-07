@@ -606,8 +606,8 @@ Rigidbody:
   m_GameObject: {fileID: 5721689795178393317}
   serializedVersion: 2
   m_Mass: 1000
-  m_Drag: 0.75
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -725,7 +725,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 07f44fe3e9c462146a7769b976c50ec4, type: 2}
+  - {fileID: 2100000, guid: b5b151f97e1f56b46a087e0136722a0f, type: 2}
   - {fileID: 2100000, guid: ab035d7682921704a9015ac353311d57, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1202,9 +1202,9 @@ MonoBehaviour:
   rearRightWheelTransform: {fileID: 5721689795922312695}
   rb: {fileID: 5721689795178393316}
   motorForce: 4000
-  breakForce: 3000
+  breakForce: 5000
   maxSteerAngle: 10
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 9105723816591442437}
 --- !u!114 &5144847741743360816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,7 +1249,8 @@ AudioSource:
   m_GameObject: {fileID: 8965532529896644790}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 20d8649abd61f9a46901dd329845fce8,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: cf0de5caeb3e5c84299b2a4acbc6f622, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.188

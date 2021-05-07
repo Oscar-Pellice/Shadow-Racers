@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform frontLeftWheelTransform = null;
     [SerializeField] private Transform frontRightWheeTransform = null;
+
+    
+
     [SerializeField] private Transform rearLeftWheelTransform = null;
     [SerializeField] private Transform rearRightWheelTransform = null;
 
@@ -32,7 +35,7 @@ public class PlayerController : MonoBehaviour
     // Inputs
     private float horizontalInput;
     private float verticalInput;
-    private bool ableAutomatic = true;
+    private bool ableAutomatic = false;
 
     private PhotonView PV;
 
@@ -42,15 +45,18 @@ public class PlayerController : MonoBehaviour
     private float tResta = 0;
     private float tActual = 0;
     private const float DistMin = 5f;
-    private LineRenderer lineRenderer;
+    //private LineRenderer lineRenderer;
     private Transform car_transform;
 
-    private int status = 0;
+    private bool isMovable = false;
 
     public AudioSource audioSource;
 
+    private Queue<PowerUp> powerUp;
+
     private void Awake()
     {
+        powerUp = new Queue<PowerUp>();
         PV = GetComponent<PhotonView>();
         raceInfo = SaveInfo.Instance.ReturnJson();
     }
@@ -61,27 +67,27 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (!PV.IsMine)
         {
-            Destroy(this.transform.Find("Camera").gameObject);
-            //Destroy(this.transform.Find("Minimap").gameObject);
+            Destroy(GameObject.Find(this.name + "/Camera"));
+            Destroy(GameObject.Find(this.name + "/Car/Minimap"));
         }
 
         // Resituem el centre de massa
         rb.centerOfMass = new Vector3 (0,-0.25f,0f); // Movem el centre de massa per que no giri
 
-        //For creating line renderer object
-        lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
-        lineRenderer.startColor = Color.black;
-        lineRenderer.endColor = Color.black;
-        lineRenderer.startWidth = 0.01f;
-        lineRenderer.endWidth = 0.01f;
-        lineRenderer.positionCount = raceInfo.Count;
-        lineRenderer.useWorldSpace = true;
+        ////For creating line renderer object
+        //lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
+        //lineRenderer.startColor = Color.red;
+        //lineRenderer.endColor = Color.red;
+        //lineRenderer.startWidth = 0.01f;
+        //lineRenderer.endWidth = 0.01f;
+        //lineRenderer.positionCount = raceInfo.Count;
+        //lineRenderer.useWorldSpace = true;
 
-        //For drawing line in the world space, provide the x,y,z values
-        for (int i = 0; i < raceInfo.Count; i++)
-        {
-            lineRenderer.SetPosition(i, new Vector3(raceInfo[i].position.x, 1, raceInfo[i].position.z)); //x,y and z position of the starting point of the line
-        }
+        ////For drawing line in the world space, provide the x,y,z values
+        //for (int i = 0; i < raceInfo.Count; i++)
+        //{
+        //    lineRenderer.SetPosition(i, new Vector3(raceInfo[i].position.x, 1, raceInfo[i].position.z)); //x,y and z position of the starting point of the line
+        //}
 
         car_transform = transform.GetChild(0);
     }
@@ -92,19 +98,22 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine) return;
         GetInput();
 
-        if (ableAutomatic == true)
+        if (isMovable)
         {
-            // Busquem al seguent node
-            tActual = Time.time - tResta;
-            if (tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+            if (ableAutomatic == true)
             {
-                //tResta = tActual - raceInfo[nextNode].time;
-                targetToGet = raceInfo[nextNode].position;
-                nextNode = (nextNode + 1) % raceInfo.Count;
+                // Busquem al seguent node
+                tActual = Time.time - tResta;
+                if (tActual > raceInfo[nextNode].time && Vector3.Distance(rb.position, raceInfo[nextNode].position) < DistMin)
+                {
+                    //tResta = tActual - raceInfo[nextNode].time;
+                    targetToGet = raceInfo[nextNode].position;
+                    nextNode = (nextNode + 1) % raceInfo.Count;
+                    //MultiplayerInforHolder.Instance.AddToTable(gameObject.name, nextNode);
+                }
             }
         }
         EngineSound();
-        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
     }
 
     // Detectem inputs del teclat
@@ -118,26 +127,34 @@ public class PlayerController : MonoBehaviour
         } 
         isBreaking = Input.GetKey(KeyCode.Space);
         isTabing = Input.GetKey(KeyCode.Tab);
+        if (Input.GetKeyDown(KeyCode.Space) && this.powerUp.Count != 0)
+        {
+            //powerUp activate
+            powerUp.Peek().StartPoweUp();
+            powerUp.Dequeue();
+            UIManager.Instance.advancePUQueue();
+        }
     }
 
     private void FixedUpdate()
     {
         if (!PV.IsMine) return;
-        if (UIManager.Instance.tab && !isTabing) UIManager.Instance.tab = false;
-        if (!UIManager.Instance.tab && isTabing) UIManager.Instance.tab = true;
 
-        if (ableAutomatic == false)
+        if (isMovable)
         {
-            HandleMotor(verticalInput);
-            HandleSteering(horizontalInput);
-            UpdateWheels();
-        } else
-        {
-            HandleVelocity();
-            HandleSteering(CalculateAngle());
-            UpdateWheels();
+            if (ableAutomatic == false)
+            {
+                HandleMotor(verticalInput);
+                HandleSteering(horizontalInput);
+                UpdateWheels();
+            }
+            else
+            {
+                HandleVelocity();
+                HandleSteering(CalculateAngle());
+                UpdateWheels();
+            }
         }
-        
     }
 
     // Calcula el angle entre el cotxe i el node
@@ -169,14 +186,14 @@ public class PlayerController : MonoBehaviour
     }
 
     // Apliquem força de motor
-    private void HandleMotor(float multiply)
+    public void HandleMotor(float multiply)
     {
         rearLeftWheelCollider.motorTorque = motorForce * multiply;
         rearRightWheelCollider.motorTorque = motorForce * multiply; 
         frontLeftWheelCollider.motorTorque = motorForce * multiply;
         frontRightWheelCollider.motorTorque = motorForce * multiply;
-
-        currentbreakForce = isBreaking ? breakForce : 0f;
+        
+        currentbreakForce = isBreaking ? breakForce * 100 : 0f;
         rearLeftWheelCollider.brakeTorque = currentbreakForce;
         rearRightWheelCollider.brakeTorque = currentbreakForce;
     }
@@ -203,14 +220,50 @@ public class PlayerController : MonoBehaviour
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
-    
+
+    public void addPowerUp(PowerUp power)
+    {
+        Debug.Log("PowerUp From Controller Name: " + power.Name + " duration: " + power.duration + "s");
+        if(powerUp.Count < 3)
+        {
+            powerUp.Enqueue(power);
+            //ToDo: Que el sprite sea del powerUp added
+            UIManager.Instance.addPUToQueue(0);
+        }
+    }
+    public Vector3 getPosition()
+    {
+        return rb.position;
+    }
+    public void changeScale(Vector3 scale)
+    {
+        Vector3 pos = this.transform.localPosition;
+        pos.y += 6f;
+        this.transform.localPosition = pos;
+        this.transform.localScale = scale;
+    }
+    public void jump(float hight)
+    {
+        rb.velocity += hight * Vector3.up;
+    }
+    public void SetMovement(bool valor)
+    {
+        isMovable = valor;
+
+    }
+
+    public void ResetTimer()
+    {
+        tActual = Time.time;
+    }
+
     private void EngineSound()
     {
-        Debug.Log(GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude);
-        audioSource.pitch = ((GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude*3)/50);
-        Debug.Log(audioSource.pitch);
-        
+        audioSource.pitch = ((GameManager.Instance.playerGameObject.GetComponentInChildren<Rigidbody>().velocity.magnitude * 3) / 50);
+    }
 
-
+    public void AddBoost(int v)
+    {
+        rb.AddForce(rb.transform.forward * v, ForceMode.Impulse);
     }
 }

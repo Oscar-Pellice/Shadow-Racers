@@ -46,7 +46,7 @@ public class PathReader : MonoBehaviour
     // Segons de interval per guardar info
     private const int DistanceToSave = 1;
 
-    private bool ended = false;
+    private bool able = false;
 
     private void Awake()
     {
@@ -63,6 +63,9 @@ public class PathReader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (registre.playerObject == null) return;
+        if (!able) return;
+
         if (Vector3.Distance(position,registre.playerObject.transform.GetChild(0).position) >= DistanceToSave)
         {
             registre.carreresPlayer[registre.carreresPlayer.Count-1].Add(new Moment(registre.playerObject.GetComponentInChildren<Rigidbody>().velocity.magnitude,
@@ -76,5 +79,10 @@ public class PathReader : MonoBehaviour
     public List<Moment> getRace(int round)
     {
         return registre.carreresPlayer[round];
+    }
+
+    public void ActivateReader(bool value)
+    {
+        able = value;
     }
 }
