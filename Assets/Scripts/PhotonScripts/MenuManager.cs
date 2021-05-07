@@ -30,8 +30,6 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMenu(Menu menu)
     {
-
-        Debug.Log("Opening menu " + menu.gameObject.name);
         for (int i = 0; i < menus.Length; i++)
         {
             if (menus[i].open)
