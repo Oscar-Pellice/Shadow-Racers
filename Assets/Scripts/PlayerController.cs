@@ -231,4 +231,8 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity += hight * Vector3.up;
     }
+    public Vector3 getVelocity()
+    {
+        return rb.velocity;
+    }
 }

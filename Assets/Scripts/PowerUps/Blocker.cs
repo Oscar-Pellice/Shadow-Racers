@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Blocker : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -17,6 +17,7 @@ public class Block : MonoBehaviour
     }
     void OnTriggerEnter(Collider coll)
     {
+        Debug.Log("Blocker collided");
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
         if (coll.gameObject.tag.Equals("Player"))
         {
