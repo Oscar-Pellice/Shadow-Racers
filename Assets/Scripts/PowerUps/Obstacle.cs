@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -12,21 +13,30 @@ public class Obstacle : PowerUp
 
     public override void Awake()
     {
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","PlayerManager"), Vector3.zero, Quaternion.identity);
         base.Awake();
-        var currentDirectory = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
-        string prefabsPath = currentDirectory + "\\..\\..\\Assets\\Prefabs";
-        myPrefab = Resources.Load(prefabsPath+"\\Blocker") as GameObject;
         
         base.Name = "Blocker";
         base.duration = 3.0f;
     }
     public override void StartPoweUp()
     {
-        GameObject blocker = Instantiate(myPrefab);
-        blocker.transform.position =base.player.getPosition();
+
+
+        var currentDirectory = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
+        string prefabsPath = currentDirectory + "\\..\\..\\Assets\\Prefabs";
+        Vector3 position = base.player.getPosition();
+        
+        var localVelocity = transform.InverseTransformDirection(base.player.getVelocity());
+        Debug.Log("vel: x=" + localVelocity.x + " y=" + localVelocity.y);
+        Debug.Log("pos: x=" + position.x + " y=" + position.y);
+        Debug.Log("player: x=" + base.player.getPosition().x + " y=" + base.player.getPosition().y);
+        position.x -= localVelocity.x/2;
+        //position.y -= localVelocity.y/2;
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Blocker"), position, Quaternion.identity);
         base.StartPoweUp();
         this.activated = true;
-        //Instantiate(myPrefab, base.player.getPosition(), Quaternion.identity);
+        
     }
 
     public override void End()
