@@ -11,6 +11,7 @@ public class Accelerator : PowerUp
         base.Awake();
         base.Name = "Accelarator";
         base.duration = 7.0f;
+        base.id = 2;
     }
     public override void StartPoweUp()
     {

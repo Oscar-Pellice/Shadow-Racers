@@ -10,9 +10,11 @@ public class Jumper : PowerUp
         base.Awake();
         base.Name = "Gigant";
         base.duration = 3.0f;
+        base.id = 1;
     }
     public override void StartPoweUp()
     {
+        base.player.AddBoost(25000);
         base.player.jump(10);
         base.StartPoweUp();
     }

@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     private const float DistMin = 5f;
     //private LineRenderer lineRenderer;
     private Transform car_transform;
+    private Transform front_transform;
+    private Transform back_transform;
 
     private bool isMovable = false;
 
@@ -90,6 +92,8 @@ public class PlayerController : MonoBehaviour
         //}
 
         car_transform = transform.GetChild(0);
+        front_transform = transform.GetChild(2);
+        back_transform = transform.GetChild(3);
     }
 
     // Update is called once per frame
@@ -147,12 +151,14 @@ public class PlayerController : MonoBehaviour
                 HandleMotor(verticalInput);
                 HandleSteering(horizontalInput);
                 UpdateWheels();
+                UpdateEmptyOBJS();
             }
             else
             {
                 HandleVelocity();
                 HandleSteering(CalculateAngle());
                 UpdateWheels();
+                UpdateEmptyOBJS();
             }
         }
     }
@@ -228,7 +234,7 @@ public class PlayerController : MonoBehaviour
         {
             powerUp.Enqueue(power);
             //ToDo: Que el sprite sea del powerUp added
-            UIManager.Instance.addPUToQueue(0);
+            UIManager.Instance.addPUToQueue(power.id);
         }
     }
     public Vector3 getPosition()
@@ -265,5 +271,44 @@ public class PlayerController : MonoBehaviour
     public void AddBoost(int v)
     {
         rb.AddForce(rb.transform.forward * v, ForceMode.Impulse);
+    }
+    public void SlowDown()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.drag = 0;
+    }
+    public Vector3 getVelocity()
+    {
+        return rb.velocity;
+    }
+    public Vector3 getFrontPosition()
+    {
+        GameObject front = this.transform.GetChild(2).gameObject;
+        return front.transform.position;
+    }
+    public Vector3 getBackPosition()
+    {
+        GameObject back = this.transform.GetChild(3).gameObject;
+        return back.transform.position;
+    }
+    private void UpdateEmptyOBJS()
+    {
+        Vector3 pos_front = car_transform.position;
+        pos_front.z += 3.22f;
+
+        Vector3 pos_back = car_transform.position;
+        
+        pos_back.z += -2.6f;
+     
+
+        Quaternion rot = car_transform.rotation;
+
+        front_transform.position = pos_front;
+
+        back_transform.position = pos_back;
+
+        back_transform.rotation = rot;
+        front_transform.rotation = rot;
     }
 }

@@ -8,6 +8,9 @@ using UnityEngine.Events;
 public class PowerUp: MonoBehaviour
 {
     [SerializeField]
+    public int id;
+
+    [SerializeField]
     public string Name;
 
     [SerializeField]

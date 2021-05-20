@@ -13,11 +13,12 @@ public class Obstacle : PowerUp
 
     public override void Awake()
     {
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs","PlayerManager"), Vector3.zero, Quaternion.identity);
+       
         base.Awake();
         
         base.Name = "Blocker";
         base.duration = 3.0f;
+        base.id = 0;
     }
     public override void StartPoweUp()
     {
@@ -25,15 +26,8 @@ public class Obstacle : PowerUp
 
         var currentDirectory = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
         string prefabsPath = currentDirectory + "\\..\\..\\Assets\\Prefabs";
-        Vector3 position = base.player.getPosition();
-        
-        var localVelocity = transform.InverseTransformDirection(base.player.getVelocity());
-        Debug.Log("vel: x=" + localVelocity.x + " y=" + localVelocity.y);
-        Debug.Log("pos: x=" + position.x + " y=" + position.y);
-        Debug.Log("player: x=" + base.player.getPosition().x + " y=" + base.player.getPosition().y);
-        position.x -= localVelocity.x/2;
-        //position.y -= localVelocity.y/2;
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Blocker"), position, Quaternion.identity);
+        Vector3 position = base.player.getBackPosition();
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Flan"), position, Quaternion.identity);
         base.StartPoweUp();
         this.activated = true;
         

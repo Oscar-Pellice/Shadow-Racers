@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116c5f7c846c2f6439a201455256b99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   Name: 
   duration: 0
   startAction:
@@ -768,6 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116c5f7c846c2f6439a201455256b99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   Name: 
   duration: 0
   startAction:
@@ -1677,6 +1679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116c5f7c846c2f6439a201455256b99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   Name: 
   duration: 0
   startAction:
@@ -2042,9 +2045,9 @@ MonoBehaviour:
   - {fileID: 1996128515}
   - {fileID: 2037757250}
   list_pu_sprite:
-  - {fileID: 21300000, guid: 31b8676a70592944e9c5b07f5bed5ebc, type: 3}
-  - {fileID: 21300000, guid: 6deb3dba61065984f9ea130cf2534b63, type: 3}
-  - {fileID: 21300000, guid: d282b6814dfc2bb4da401ba3b7a1a62d, type: 3}
+  - {fileID: 21300000, guid: 04a258c12eecd094abfc26609934f8f4, type: 3}
+  - {fileID: 21300000, guid: 26bcdf3f5a5645942a0acb49a73bca9f, type: 3}
+  - {fileID: 21300000, guid: 06f1dc368eb9a03448339e1135eaa09c, type: 3}
 --- !u!114 &892694306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2516,7 +2519,7 @@ PrefabInstance:
     - target: {fileID: 2991999415018370553, guid: 17797628729dccb45a28fc2e6c186b63,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2991999415018370553, guid: 17797628729dccb45a28fc2e6c186b63,
         type: 3}
@@ -2841,6 +2844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116c5f7c846c2f6439a201455256b99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   Name: 
   duration: 0
   startAction:

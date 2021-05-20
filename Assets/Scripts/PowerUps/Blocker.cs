@@ -27,8 +27,9 @@ public class Blocker : MonoBehaviour
 
             if (playerController != null && p != null)
             {
+
                 //adding PowerUp to GameObject
-                coll.gameObject.transform.parent.parent.GetComponent<PlayerController>().HandleMotor(0f);
+                coll.gameObject.transform.parent.parent.GetComponent<PlayerController>().SlowDown();
                 GetComponent<AudioSource>().Play();
                 Destroy(this.gameObject);
             }
