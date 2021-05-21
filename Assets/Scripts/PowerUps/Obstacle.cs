@@ -37,4 +37,17 @@ public class Obstacle : PowerUp
     {
         base.End();
     }
+    private void Update()
+    {
+        if (this.activated)
+        {
+            base.duration -= Time.deltaTime;
+            if (base.duration <= 0.0f)
+            {
+                this.activated = false;
+                base.player.RestoreMotor();
+                base.duration = 3.0f;
+            }
+        }
+    }
 }
