@@ -78,7 +78,7 @@ public class PowerUpCollider : MonoBehaviour
     void OnTriggerEnter(Collider coll)
     {
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if (coll.gameObject.tag.Equals("Player"))
+        if (coll.gameObject.tag.Contains("Player"))
         {
             collided = true;
 

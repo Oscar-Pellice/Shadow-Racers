@@ -97,6 +97,7 @@ public class UIManager : MonoBehaviour
     {
         if (pu_loc[2].active)
         {
+            pu_loc[0].GetComponent<Image>().sprite = pu_loc[1].GetComponent<Image>().sprite;
             pu_loc[1].GetComponent<Image>().sprite = pu_loc[2].GetComponent<Image>().sprite;
             pu_loc[2].SetActive(false);
         }else if (pu_loc[1].active)
