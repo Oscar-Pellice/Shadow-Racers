@@ -233,7 +233,6 @@ public class PlayerController : MonoBehaviour
         if(powerUp.Count < 3)
         {
             powerUp.Enqueue(power);
-            //ToDo: Que el sprite sea del powerUp added
             UIManager.Instance.addPUToQueue(power.id);
         }
     }

@@ -14,7 +14,7 @@ public class Jumper : PowerUp
     }
     public override void StartPoweUp()
     {
-        base.player.AddBoost(25000);
+        //base.player.AddBoost(25000);
         base.player.jump(10);
         base.StartPoweUp();
     }
