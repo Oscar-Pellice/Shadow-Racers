@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public int roundFlag = 0;
     private const int MaxRounds = 3;
     private Vector3[,] startingPosition = { { new Vector3(20, 199, -370), new Vector3(28, 199, -370), new Vector3(20, 199, -380), new Vector3(28, 199, -380), new Vector3(20, 199, -390), new Vector3(28, 199, -390) },
-                                            { new Vector3(120, 0, 10), new Vector3(128, 0, 10), new Vector3(120, 0, 0), new Vector3(128, 0, 0), new Vector3(120, 0, -10), new Vector3(128, 0, -10) } };
+                                            { new Vector3(120, 0.5f, 10), new Vector3(128, 0.5f, 10), new Vector3(120, 0.5f, 0), new Vector3(128, 0.5f, 0), new Vector3(120, 0.5f, -10), new Vector3(128, 0.5f, -10) } };
 
     public List<Material> car_list;
     public List<GameObject> map_list;
@@ -60,8 +60,11 @@ public class GameManager : MonoBehaviour
 
     public AudioMixer audioMixer;
 
+
+    // ----------------------------- AWAKE ------------------------------------
     private void Awake()
     {
+        // Generem instancia de gameManager
         if (Instance)
         {
             Destroy(gameObject);
@@ -71,12 +74,15 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called before the first frame update
+    // ----------------------------- START ------------------------------------
     void Start()
     {
+        // Assignem el audiomixer
         audioMixer.SetFloat("volume", InfoSaver.Instance.volume);
+        // Assignem el PhotonView
         PV = GetComponent<PhotonView>();
 
+        // Mirem quin mapa s'ha seleccionat per posarlo actiu
         if (InfoSaver.Instance.mapSelected == 0)
         {
             map_list[1].SetActive(false);
@@ -87,22 +93,27 @@ public class GameManager : MonoBehaviour
             map_list[0].SetActive(false);
             map_list[1].SetActive(true);
         }
+        // Setejem els temps 
         times = new float[12];
+        //Setejem el pathreader
         pathReader = GetComponent<PathReader>();
     }
 
+    // ----------------------------- FUNCIONS ------------------------------------
     public void CreatePlayer(int id)
     {
         // Serveix per crear i inicialitzar el jugador
         player = new Player(id);
-
+        // Començem la ronda
         StartRound();
     }
 
     private void StartPlayer()
     {
+        // Destruim si existeix un jugador
         if (playerGameObject != null) Destroy(playerGameObject);
 
+        // Si es el masterClient
         if (PhotonNetwork.IsMasterClient)
         {
             if (InfoSaver.Instance.CarSelected == 0)
@@ -132,6 +143,7 @@ public class GameManager : MonoBehaviour
             //playerGameObject.transform.Find("Car").transform.Find("Body").GetComponent<MeshRenderer>().materials[0] = car_list[InfoSaver.Instance.CarSelected];
         }
 
+        // Afegim el jugador al pathreader
         pathReader.AddRoundPlayer(playerGameObject);
         pathReader.ActivateReader(false);
 
@@ -145,23 +157,27 @@ public class GameManager : MonoBehaviour
         //Iniciar tots el jugadors
         UIManager.Instance.ChangeRound(round);
 
+        // Iniciem els cotxes
         StartCoroutine(StartCars());
     }
 
     // Serveix per iniciar els phantoms al començament de la ronda
     IEnumerator StartCars()
     {
+        // Creem el jugador
         StartPlayer();
+        // Canviem la camara
         ChangeCamara(false);
+        // Desactivem moviment
         playerGameObject.GetComponent<PlayerController>().SetMovement(false);
 
+        //Generem fanasmes
         GameObject phantom;
         string prefabName = "Phantom Player2";
         if (player.player_id == 0 && InfoSaver.Instance.CarSelected == 0 || player.player_id == 1 && InfoSaver.Instance.CarSelected == 1)
         {
             prefabName = "Phantom Player";
         }
-
         for (int r = 0; r < round; r++)
         {
             phantom = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", prefabName), startingPosition[InfoSaver.Instance.mapSelected,r * 2 + player.player_id], Quaternion.identity);
@@ -172,7 +188,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(1);
         }
 
-        //semafor
+        //Activació del semafor
         UIManager.Instance.SemSetActive(true);
         UIManager.Instance.setSemafor(0);
         yield return new WaitForSecondsRealtime(1);
@@ -180,17 +196,20 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
         UIManager.Instance.setSemafor(2);
 
+        // Activem el moviment dels jugadors
         for (int r = 0; r < round; r++)
         {
             phantomCars[r].GetComponent<IA_Car>().SetMovement(true);
         }
         playerGameObject.GetComponent<PlayerController>().SetMovement(true);
+        // Activem el reader
         pathReader.ActivateReader(true);
+        // Reiniciem el timer
         playerGameObject.GetComponent<PlayerController>().ResetTimer();
         UIManager.Instance.StartRoundUI();
         roundFlag = 0;
 
-
+        // Desactivem el semafor
         yield return new WaitForSecondsRealtime(2);
         UIManager.Instance.SemSetActive(false);
 
@@ -201,11 +220,7 @@ public class GameManager : MonoBehaviour
     public void FinishRound()
     {
         //SaveInfo.Instance.SaveIntoJson(pathReader.getRace(0));
-        if (PV.IsMine)
-        {
-            PV.RPC("RPC_EndRound", RpcTarget.OthersBuffered);
-        }
-        StartCoroutine(EndRound());
+        StartCoroutine( EndRound());
     }
 
     public void ChangeCamara(bool principal)
@@ -218,47 +233,50 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject obj in phantomCars) Destroy(obj);
         phantomCars = new List<GameObject>();
-        Destroy(playerGameObject);
+        PhotonNetwork.Destroy(this.playerGameObject);
     }
 
     IEnumerator EndRound()
     {
         roundFlag = 1;
         round++;
+        // Delay time
         yield return new WaitForSecondsRealtime(5);
-        foreach (GameObject obj in phantomCars) Destroy(obj);
-        phantomCars = new List<GameObject>();
-        Destroy(playerGameObject);
+        // Destruim objectes
+        if (PV.IsMine)
+        {
+            PV.RPC("RPC_EndRound", RpcTarget.AllBuffered);
+        }
         UIManager.Instance.PUSetActive(false);
 
+        // Mirem si es ultima ronda.
         if (round < MaxRounds)
         {
             StartRound();
-        } else
+        } 
+        else 
         {
-            InfoSaver.Instance.BroadcastWinner(winnerString);
             winnerString = InfoSaver.Instance.winnerString;
 
             winnerCanvas.gameObject.SetActive(true);
             if (winnerString == "Player" || winnerString == "Phantom Player - 1" || winnerString == "Phantom Player - 2")
             {
-                winner_text.text = "Winner\nPlayer 1";
+                winner_text.text = "Winner\n BLUE";
             }
             else
             {
-                winner_text.text = "Winner\nPlayer 2";
+                winner_text.text = "Winner\n RED";
             }
             
             canvas.gameObject.SetActive(false);
         }
     }
 
+    //------------------------------DEBUG-----------------------------------------------
     public void GoBack()
     {
         PhotonNetwork.LoadLevel(0);
     }
-
-    //------------------------------DEBUG-----------------------------------------------
 
     float deltaTime = 0.0f;
 
