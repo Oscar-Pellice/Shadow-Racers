@@ -220,10 +220,7 @@ public class GameManager : MonoBehaviour
     public void FinishRound()
     {
         //SaveInfo.Instance.SaveIntoJson(pathReader.getRace(0));
-        if (PV.IsMine)
-        {
-            PV.RPC("RPC_EndRound", RpcTarget.AllBuffered);
-        }
+        StartCoroutine( EndRound());
     }
 
     public void ChangeCamara(bool principal)
@@ -246,9 +243,10 @@ public class GameManager : MonoBehaviour
         // Delay time
         yield return new WaitForSecondsRealtime(5);
         // Destruim objectes
-        foreach (GameObject obj in phantomCars) Destroy(obj);
-        phantomCars = new List<GameObject>();
-        PhotonNetwork.Destroy(this.playerGameObject);
+        if (PV.IsMine)
+        {
+            PV.RPC("RPC_EndRound", RpcTarget.AllBuffered);
+        }
         UIManager.Instance.PUSetActive(false);
 
         // Mirem si es ultima ronda.
