@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,9 +32,6 @@ public class PowerUpCollider : MonoBehaviour
                     case "Blocker":
                         this.powerUp = gameObject.AddComponent<Obstacle>();
                         break;
-                    case "Gigant":
-                        this.powerUp = gameObject.AddComponent<Gigant>();
-                        break;
                     case "Jumper":
                         this.powerUp = gameObject.AddComponent<Jumper>();
                         break;
@@ -45,7 +43,7 @@ public class PowerUpCollider : MonoBehaviour
             else
             {
                 Debug.Log("String powerUpType is null or empty");
-                int x = UnityEngine.Random.Range(0, 3);// 0-> Default case
+                int x = UnityEngine.Random.Range(0, 4);// 0-> Default case
                 switch (x)
                 {
                     case 1:
@@ -55,9 +53,6 @@ public class PowerUpCollider : MonoBehaviour
                         this.powerUp = gameObject.AddComponent<Obstacle>();
                         break;
                     case 3:
-                        this.powerUp = gameObject.AddComponent<Gigant>();
-                        break;
-                    case 4:
                         this.powerUp = gameObject.AddComponent<Jumper>();
                         break;
                     default:
@@ -77,33 +72,39 @@ public class PowerUpCollider : MonoBehaviour
     //Detect collisions between the GameObjects with Colliders attached
     void OnTriggerEnter(Collider coll)
     {
+        PhotonView PV = coll.transform.parent.parent.GetComponent<PhotonView>();
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
         if (coll.gameObject.tag.Contains("Player"))
         {
-            collided = true;
-
-            GameObject p = coll.gameObject.transform.parent.parent.gameObject;
-            PlayerController playerController = coll.gameObject.transform.parent.parent.GetComponent<PlayerController>();
-
-            Debug.Log("GameObject with player controller exists?" + (p!=null));
-            Debug.Log("does it has player controller?" + (playerController != null));
-
-            if(playerController != null && p != null)
+            if (PV.IsMine)
             {
-                //adding PowerUp to GameObject
-                coll.gameObject.transform.parent.parent.GetComponent<PlayerController>().addPowerUp(this.powerUp);
-                //associating PlayerController to powerUp
-                powerUp.setPlayer(coll.gameObject.transform.parent.parent.GetComponent<PlayerController>());
-                //making dissapear collider
+                GameObject p = coll.gameObject.transform.parent.parent.gameObject;
+                PlayerController playerController = coll.gameObject.transform.parent.parent.GetComponent<PlayerController>();
+
+                Debug.Log("GameObject with player controller exists?" + (p!=null));
+                Debug.Log("does it has player controller?" + (playerController != null));
+
+                if(playerController != null && p != null)
+                {
+                    //adding PowerUp to GameObject
+                    coll.gameObject.transform.parent.parent.GetComponent<PlayerController>().addPowerUp(this.powerUp);
+                    //associating PlayerController to powerUp
+                    powerUp.setPlayer(coll.gameObject.transform.parent.parent.GetComponent<PlayerController>());
+                    //making dissapear collider
+                    hideCollider();
+                    //associating new powerup
+                    instancePowerUp();
+                }
+            } else
+            {
+                
                 hideCollider();
-                //associating new powerup
-                instancePowerUp();
             }
-            
         }
     }
     private void hideCollider()
     {
+        collided = true;
         GameObject ChildGameObject1 = this.transform.GetChild(0).gameObject;
         ChildGameObject1.GetComponent<MeshRenderer>().enabled = false;
         GameObject ChildGameObject2 = this.transform.GetChild(1).gameObject;

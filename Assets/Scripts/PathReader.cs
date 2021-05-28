@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PathReader : MonoBehaviour
 {
+    private int round = 0;
+
     //Struct de Informació guardada del path del jugador
     public class Moment
     {
@@ -19,13 +21,27 @@ public class PathReader : MonoBehaviour
         }
     }
 
+    public class PowerReg
+    {
+        public float time;
+        public int id;
+
+        public PowerReg(float time, int id)
+        {
+            this.time = time;
+            this.id = id;
+        }
+    }
+
     public class RegisterInfo
     {
+        public List<List<PowerReg>> powerRegister;
         public List<List<Moment>> carreresPlayer;
         public GameObject playerObject;
 
         public RegisterInfo()
         {
+            powerRegister = new List<List<PowerReg>>();
             carreresPlayer = new List<List<Moment>>();
             playerObject = null;
         }
@@ -33,6 +49,7 @@ public class PathReader : MonoBehaviour
         public void AddObject(GameObject obj)
         {
             carreresPlayer.Add(new List<Moment>());
+            powerRegister.Add(new List<PowerReg>());
             playerObject = obj;
         }
     }
@@ -58,6 +75,7 @@ public class PathReader : MonoBehaviour
         registre.AddObject(player);
         time = Time.time;
         position = player.transform.GetChild(0).position;
+        round++;
     }
 
     // Update is called once per frame
@@ -81,8 +99,18 @@ public class PathReader : MonoBehaviour
         return registre.carreresPlayer[round];
     }
 
+    public List<PowerReg> getPowerups(int round)
+    {
+        return registre.powerRegister[round];
+    }
+
     public void ActivateReader(bool value)
     {
         able = value;
+    }
+
+    public void addPowerup(int id)
+    {
+        this.registre.powerRegister[round-1].Add(new PowerReg(Time.time - time, id));
     }
 }

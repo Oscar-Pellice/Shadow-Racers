@@ -9,7 +9,7 @@ using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
-    private PathReader pathReader;
+    public PathReader pathReader;
     public static GameManager Instance;
 
     public Camera mainCamera;
@@ -184,6 +184,7 @@ public class GameManager : MonoBehaviour
             phantom.name = prefabName + " - " + r.ToString();
             phantomCars.Add(phantom);
             phantom.GetComponent<IA_Car>().AssignRace(pathReader.getRace(r));
+            phantom.GetComponent<IA_Car>().AssignPowerUp(pathReader.getPowerups(r));
             phantomCars[r].GetComponent<IA_Car>().SetMovement(false);
             yield return new WaitForSecondsRealtime(1);
         }
@@ -220,7 +221,7 @@ public class GameManager : MonoBehaviour
     public void FinishRound()
     {
         //SaveInfo.Instance.SaveIntoJson(pathReader.getRace(0));
-        StartCoroutine( EndRound());
+        StartCoroutine(EndRound());
     }
 
     public void ChangeCamara(bool principal)
@@ -228,13 +229,14 @@ public class GameManager : MonoBehaviour
         mainCamera.enabled = principal;
     }
 
-    [PunRPC]
+    /*[PunRPC]
     void RPC_EndRound()
     {
         foreach (GameObject obj in phantomCars) Destroy(obj);
         phantomCars = new List<GameObject>();
         PhotonNetwork.Destroy(this.playerGameObject);
-    }
+        Debug.Log(InfoSaver.Instance.winnerString);
+    }*/
 
     IEnumerator EndRound()
     {
@@ -243,10 +245,14 @@ public class GameManager : MonoBehaviour
         // Delay time
         yield return new WaitForSecondsRealtime(5);
         // Destruim objectes
-        if (PV.IsMine)
+        foreach (GameObject obj in phantomCars) Destroy(obj);
+        phantomCars = new List<GameObject>();
+        PhotonNetwork.Destroy(this.playerGameObject);
+        Debug.Log(this.winnerString);
+        /*if (PV.IsMine)
         {
-            PV.RPC("RPC_EndRound", RpcTarget.AllBuffered);
-        }
+            PV.RPC("RPC_EndRound", RpcTarget.OthersBuffered);
+        }*/
         UIManager.Instance.PUSetActive(false);
 
         // Mirem si es ultima ronda.
@@ -256,7 +262,7 @@ public class GameManager : MonoBehaviour
         } 
         else 
         {
-            winnerString = InfoSaver.Instance.winnerString;
+            //winnerString = InfoSaver.Instance.winnerString;
 
             winnerCanvas.gameObject.SetActive(true);
             if (winnerString == "Player" || winnerString == "Phantom Player - 1" || winnerString == "Phantom Player - 2")

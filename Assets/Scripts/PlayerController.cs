@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour
         {
             //powerUp activate
             powerUp.Peek().StartPoweUp();
+            GameManager.Instance.pathReader.addPowerup(powerUp.Peek().id);
             powerUp.Dequeue();
             UIManager.Instance.advancePUQueue();
         }
@@ -273,8 +274,8 @@ public class PlayerController : MonoBehaviour
     }
     public void SlowDown()
     {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        //rb.velocity = Vector3.zero;
+        //rb.angularVelocity = Vector3.zero;
         motorForce /= 2;
     }
     public void RestoreMotor()

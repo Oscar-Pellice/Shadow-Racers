@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 
 public class IA_Car : MonoBehaviour
@@ -26,6 +30,7 @@ public class IA_Car : MonoBehaviour
     int nextNode = 0;
     //private GameManager.PathInfo[] info;
     private List<PathReader.Moment> raceInfo;
+    private List<PathReader.PowerReg> powerReg;
     private Vector3 targetToGet;
 
     private float tResta = 0;
@@ -61,6 +66,11 @@ public class IA_Car : MonoBehaviour
         //}
     }
 
+    public void AssignPowerUp(List<PathReader.PowerReg> race)
+    {
+        powerReg = race;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,10 +83,24 @@ public class IA_Car : MonoBehaviour
         tResta = Time.time;
     }
 
+    private int getPowerUp(float currentTime)
+    {
+        foreach(PathReader.PowerReg power in this.powerReg){
+            if (power.time == currentTime) return power.id;
+        }
+        return -1;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (raceInfo == null) return;
+
+        int hasPowerUp = getPowerUp(tActual);
+        if (hasPowerUp != -1)
+        {
+            activatePowerUp(hasPowerUp);
+        }
 
         if (isMovable)
         {
@@ -92,6 +116,40 @@ public class IA_Car : MonoBehaviour
             }
         }
     }
+
+    private void activatePowerUp(int powerup)
+    {
+        switch (powerup)
+        {
+            case 1:
+                jump(10);
+                break;
+            case 2:
+                AddBoost(50000);
+                break;
+            case 3:
+                Vector3 position = getBackPosition();
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Flan"), position, Quaternion.identity);
+                break;
+            default:
+                break;
+        } 
+    }
+
+    public Vector3 getBackPosition()
+    {
+        GameObject back = this.transform.GetChild(3).gameObject;
+        return back.transform.position;
+    }
+    public void jump(float hight)
+    {
+        rb.velocity += hight * Vector3.up;
+    }
+    public void AddBoost(int v)
+    {
+        rb.AddForce(rb.transform.forward * v, ForceMode.Impulse);
+    }
+
 
     private void FixedUpdate()
     {

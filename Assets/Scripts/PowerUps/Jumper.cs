@@ -8,7 +8,7 @@ public class Jumper : PowerUp
     public override void Awake()
     {
         base.Awake();
-        base.Name = "Gigant";
+        base.Name = "Jumper";
         base.duration = 3.0f;
         base.id = 1;
     }

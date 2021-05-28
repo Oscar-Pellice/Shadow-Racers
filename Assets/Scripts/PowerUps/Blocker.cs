@@ -19,7 +19,7 @@ public class Blocker : MonoBehaviour
     {
         Debug.Log("Blocker collided");
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if (coll.gameObject.tag.Equals("Player"))
+        if (coll.gameObject.tag.Contains("Player"))
         {
 
             GameObject p = coll.gameObject.transform.parent.parent.gameObject;
