@@ -3085,7 +3085,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6, y: -323}
+  m_AnchoredPosition: {x: 6, y: -107}
   m_SizeDelta: {x: 250, y: 289.96503}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &6652342003681710367
@@ -3123,8 +3123,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -82, y: -459.6}
-  m_SizeDelta: {x: 250, y: 449.55585}
+  m_AnchoredPosition: {x: -82, y: -378}
+  m_SizeDelta: {x: 250, y: 751.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6652342004869164001
 MonoBehaviour:
@@ -3158,7 +3158,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nProject Manager\n\nLevel designer\n\n\nPowerups \n\n\n\nUI/UX\n\nSound
+  m_Text: "\nProject Manager\n\nLevel designer\n\nProgrammer\n\n\nPowerups \n\n\n\nUI/UX\n\n\n\nSound
     Effects/UI\n\n\nMusic:\n(Kiwi Lady, AI)"
 --- !u!1 &6652342004869164003
 GameObject:
@@ -3243,7 +3243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6652342005059100782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3290,8 +3290,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nOscar Pellic\xE9\n\nVictor Valls\n\nGuillermo Serraclara\nEduard Boya\nOscar
-    Pellic\xE9\n\nDavid S\xE1nchez\nOscar Pellic\xE9\n\nCarlos Manzanares\n\n\n"
+  m_Text: "\nOscar Pellic\xE9\n\nVictor Valls\n\nOscar Pellic\xE9\n\nGuillermo Serraclara\nOscar
+    Pellic\xE9\n\nDavid S\xE1nchez\nOscar Pellic\xE9\n\nOscar Pellic\xE9\nDavid S\xE1nchez\nEduard
+    Boya\n\nCarlos Manzanares\n\n\n"
 --- !u!222 &6652342005493857197
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3334,8 +3335,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 210.9, y: -445.3}
-  m_SizeDelta: {x: 342.74, y: 443.63452}
+  m_AnchoredPosition: {x: 210.9, y: -438}
+  m_SizeDelta: {x: 342.74, y: 874.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7798921694782903202
 GameObject:
@@ -5693,11 +5694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   car_list:
   - {fileID: 21300000, guid: 6a699a58947b3754c836e8684b489208, type: 3}
-  - {fileID: 21300000, guid: 9baf6a8c9c4695741b475a0347cdf2c1, type: 3}
-  - {fileID: 21300000, guid: ba114091d10f24345a12e529740aec8a, type: 3}
   - {fileID: 21300000, guid: ec879b74aba71e04785cf373b7850044, type: 3}
-  - {fileID: 21300000, guid: e26b56fbe3844a343a46488603aef203, type: 3}
-  - {fileID: 21300000, guid: 630dbd56a330b4f4aa0870198e671a7d, type: 3}
   counter: 0
   image_car: {fileID: 7798921696697952514}
 --- !u!1 &7798921695250213840

@@ -30,7 +30,7 @@ public class Blocker : MonoBehaviour
 
                 //adding PowerUp to GameObject
                 coll.gameObject.transform.parent.parent.GetComponent<PlayerController>().SlowDown();
-                GetComponent<AudioSource>().Play();
+                //GetComponent<AudioSource>().Play();
                 Destroy(this.gameObject);
             }
 
