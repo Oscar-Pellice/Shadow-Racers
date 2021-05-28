@@ -277,11 +277,12 @@ public class PlayerController : MonoBehaviour
     {
         //rb.velocity = Vector3.zero;
         //rb.angularVelocity = Vector3.zero;
-        motorForce /= 2;
+        //motorForce /= 2;
+        AddBoost(-20000);
     }
     public void RestoreMotor()
     {
-        motorForce *= 2;
+        //motorForce *= 2;
     }
     public Vector3 getVelocity()
     {
