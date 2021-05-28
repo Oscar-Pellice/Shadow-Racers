@@ -248,9 +248,10 @@ public class PlayerController : MonoBehaviour
         this.transform.localPosition = pos;
         this.transform.localScale = scale;
     }
-    public void jump(float hight)
+    public void jump(float hight, float v)
     {
-        rb.velocity += hight * Vector3.up;
+        rb.AddForce(rb.transform.forward * v + rb.transform.up * hight, ForceMode.Impulse);
+        //rb.velocity += hight * Vector3.up;
     }
     public void SetMovement(bool valor)
     {
