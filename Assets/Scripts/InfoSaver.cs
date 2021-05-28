@@ -11,7 +11,7 @@ public class InfoSaver : MonoBehaviour
     public int CarSelected = 0;
     public int EnemyCarSelected = 0;
 
-    public int mapSelected = 0;
+    public int mapSelected = 1;
 
     public string winnerString;
 

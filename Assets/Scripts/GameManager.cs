@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
         //Generem fanasmes
         GameObject phantom;
         string prefabName = "Phantom Player2";
-        if (player.player_id == 0 && InfoSaver.Instance.CarSelected == 0 || player.player_id == 1 && InfoSaver.Instance.CarSelected == 1)
+        if (PhotonNetwork.IsMasterClient && InfoSaver.Instance.CarSelected == 0 || !PhotonNetwork.IsMasterClient && InfoSaver.Instance.CarSelected != 0)
         {
             prefabName = "Phantom Player";
         }
@@ -265,13 +265,13 @@ public class GameManager : MonoBehaviour
             //winnerString = InfoSaver.Instance.winnerString;
 
             winnerCanvas.gameObject.SetActive(true);
-            if (winnerString == "Player" || winnerString == "Phantom Player - 1" || winnerString == "Phantom Player - 2")
+            if (winnerString.Contains("Player2"))
             {
-                winner_text.text = "Winner\n BLUE";
+                winner_text.text = "Winner\n RED";
             }
             else
             {
-                winner_text.text = "Winner\n RED";
+                winner_text.text = "Winner\n BLUE";
             }
             
             canvas.gameObject.SetActive(false);
@@ -281,7 +281,8 @@ public class GameManager : MonoBehaviour
     //------------------------------DEBUG-----------------------------------------------
     public void GoBack()
     {
-        PhotonNetwork.LoadLevel(0);
+        System.Diagnostics.Process.Start(Application.dataPath + "/../Shadow-Racers.exe");
+        Application.Quit();
     }
 
     float deltaTime = 0.0f;

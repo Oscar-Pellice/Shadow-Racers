@@ -24,7 +24,7 @@ public class ScenarioSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        counter = 0;
+        counter = 1;
     }
 
     public void Go_right()

@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
+using System.Diagnostics;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -28,14 +29,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (PhotonNetwork.IsConnected)
-        {
-            OnJoinedLobby();
-        }else
-        {
-            PhotonNetwork.ConnectUsingSettings();
-        }
         
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
@@ -47,7 +42,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         MenuManager.Instance.OpenMenu("Principal");
-        Debug.Log("Joined Lobby");
+        UnityEngine.Debug.Log("Joined Lobby");
         PhotonNetwork.NickName = "Player " + Random.Range(0, 10).ToString("00");
     }
 
@@ -63,7 +58,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined Room");
+        UnityEngine.Debug.Log("Joined Room");
         MenuManager.Instance.OpenMenu("Room");
         roomNameText.text = "Hi";
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
@@ -135,7 +130,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         int car = (CarSelection.Instance == null)? 0 : CarSelection.Instance.counter;
-        int map = (ScenarioSelection.Instance == null) ? 0 : ScenarioSelection.Instance.counter;
+        int map = (ScenarioSelection.Instance == null) ? 1 : ScenarioSelection.Instance.counter;
 
         InfoSaver.Instance.SaveSelection(car, map);
         PhotonNetwork.LoadLevel(1);
